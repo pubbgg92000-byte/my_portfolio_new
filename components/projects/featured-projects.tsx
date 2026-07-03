@@ -1,7 +1,34 @@
-import { ArrowUpRight, Github } from "lucide-react";
-import { projects } from "@/content/projects/projects";
+"use client";
+
+import { useState } from "react";
+import {
+  ArrowUpRight,
+  Bot,
+  BriefcaseBusiness,
+  ChevronDown,
+  Dumbbell,
+  Github,
+  Image,
+  Leaf,
+  MailCheck,
+  PawPrint,
+} from "lucide-react";
+import { experiments, projects } from "@/content/projects/projects";
+
+const experimentIcons = {
+  "forest-life": Leaf,
+  "titan-temp-mail": MailCheck,
+  "3d-animal-world": PawPrint,
+  "auto-job-search-apply": BriefcaseBusiness,
+  "iopaint-bulk": Image,
+  "desktop-organizer": Bot,
+  "shoot-asset": Image,
+  "fit-ai-pro": Dumbbell,
+} as const;
 
 export function FeaturedProjects() {
+  const [openExperiment, setOpenExperiment] = useState<string | null>(null);
+
   return (
     <section id="projects" className="featured-projects" aria-labelledby="projects-title">
       <header className="section-heading">
@@ -40,6 +67,42 @@ export function FeaturedProjects() {
             </div>
           </article>
         ))}
+      </div>
+      <div className="experiment-section">
+        <header>
+          <p>Selected experiments</p>
+          <h3>Smaller builds, utilities, and creative prototypes</h3>
+        </header>
+        <div className="experiment-grid">
+          {experiments.map((experiment) => {
+            const isOpen = openExperiment === experiment.slug;
+            const Icon = experimentIcons[experiment.slug as keyof typeof experimentIcons] ?? Image;
+            return (
+              <article className={`experiment-card${isOpen ? " open" : ""}`} key={experiment.slug}>
+                <button
+                  className="experiment-toggle"
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenExperiment(isOpen ? null : experiment.slug)}
+                >
+                  <span>
+                    <p><Icon aria-hidden="true" />{experiment.category}</p>
+                    <h4>{experiment.title}</h4>
+                  </span>
+                  <ChevronDown aria-hidden="true" />
+                </button>
+                <span>{experiment.summary}</span>
+                <div className="project-tags">{experiment.technologies.map((item) => <i key={item}>{item}</i>)}</div>
+                <div className="experiment-links">
+                  <a href={experiment.githubUrl} target="_blank" rel="noreferrer" aria-label={`${experiment.title} source code`}><Github /></a>
+                  {experiment.liveUrl ? (
+                    <a href={experiment.liveUrl} target="_blank" rel="noreferrer" aria-label={`${experiment.title} live website`}><ArrowUpRight /></a>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

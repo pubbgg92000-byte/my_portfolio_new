@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowDown, ArrowRight, Braces, Code2, Download, Github,
-  Linkedin, Mail, PanelsTopLeft, Server, Sparkles,
+  Linkedin, Mail, Menu, PanelsTopLeft, Server, Sparkles, X,
 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -30,12 +30,24 @@ const tech = [
   { name: "Node.js", icon: Server }, { name: "AI", icon: Code2 },
 ];
 
-const navItems = ["Home", "About", "Projects", "Experience", "Contact"];
+const navItems = ["Home", "Projects", "Experience", "About", "Skills", "Contact"];
+const mobileNavItems = [
+  { label: "Home", href: "/#home" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Experience", href: "/#experience" },
+  { label: "About", href: "/#about" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Resume", href: "/resume" },
+  { label: "Focus", href: "/focus" },
+  { label: "Certifications", href: "/certifications" },
+  { label: "Contact", href: "/contact" },
+];
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activeSection, setActiveSection] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const scope = root.current;
@@ -274,7 +286,21 @@ export function Hero() {
             );
           })}
         </nav>
-        <a className="nav-contact" href="mailto:mangalarapuarvind@gmail.com">Let&apos;s connect <span /></a>
+        <button
+          className="mobile-menu-toggle"
+          type="button"
+          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((open) => !open)}
+        >
+          {mobileMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
+        <a className="nav-contact" href="/resume.pdf" download>Download resume <span /></a>
+        <div className={`mobile-menu-panel${mobileMenuOpen ? " open" : ""}`}>
+          {mobileNavItems.map((item) => (
+            <a key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)}>{item.label}</a>
+          ))}
+        </div>
       </header>
 
       <section id="home" className="hero-stage" aria-labelledby="hero-title">
