@@ -34,11 +34,10 @@ const tech = [
   { name: "Node.js", icon: Server }, { name: "Applied AI", icon: Code2 },
 ];
 
-const navItems = ["Home", "Projects", "Experience", "About", "Skills", "Contact"];
+const navItems = ["Home", "Projects", "About", "Skills", "Contact"];
 const mobileNavItems = [
   { label: "Home", href: "/#home" },
   { label: "Projects", href: "/#projects" },
-  { label: "Experience", href: "/#experience" },
   { label: "About", href: "/#about" },
   { label: "Skills", href: "/#skills" },
   { label: "Resume", href: "/resume" },

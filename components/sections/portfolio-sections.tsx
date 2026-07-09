@@ -54,11 +54,12 @@ const facts = [
 type IconType = typeof Code2;
 
 const currentlyLearning = [
+  { label: "React", icon: Sparkles },
   { label: "Next.js", icon: PanelsTopLeft },
+  { label: "Basic Python", icon: Code2 },
   { label: "AI Agents", icon: Bot },
   { label: "Three.js", icon: Boxes },
   { label: "System Design", icon: Network },
-  { label: "Docker", icon: Container },
 ];
 
 type SkillItem = {
@@ -85,6 +86,7 @@ const skillGroups = [
     skills: [
       { name: "Node.js", icon: Server },
       { name: "NestJS", icon: Boxes },
+      { name: "Basic Python", icon: Code2 },
       { name: "REST APIs", icon: Network },
       { name: "PostgreSQL", icon: Database },
       { name: "Prisma", icon: GitBranch },
@@ -128,7 +130,7 @@ const skillGroups = [
 const resumeSummary = [
   { label: "Experience", value: "Frontend Developer at Uncommon Design Services; SaaS UI, API integration, testing, debugging, Cloudflare deployment support." },
   { label: "Education", value: "B.Tech Mechanical Engineering, Holy Mary Group of Institutions. Diploma Mechanical Engineering, St. Marys Group of Institutions." },
-  { label: "Skills", value: "Svelte, JavaScript, HTML, CSS, Tailwind, REST APIs, Git, Cloudflare, n8n, AI workflows, prompt engineering, Selenium basics." },
+  { label: "Skills", value: "React, Basic Python, Svelte, JavaScript, HTML, CSS, Tailwind, REST APIs, Git, Cloudflare, n8n, AI workflows, prompt engineering, Selenium basics." },
 ];
 
 const focusItems = [
