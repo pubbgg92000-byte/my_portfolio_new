@@ -199,17 +199,18 @@ export function Hero() {
             }
             const textFade = gsap.utils.clamp(0, 1, (progress - .9) / .1);
             gsap.set(".hero-content", {
-              opacity: isMobile ? 1 : 1 - textFade * .78,
+              opacity: isMobile ? 1 : 1 - textFade * .72,
               y: isMobile ? 0 : -18 * textFade,
             });
             gsap.set(".tech-dock", {
-              opacity: isMobile ? 1 : 1 - textFade,
+              opacity: isMobile ? 1 : 1 - textFade * .82,
             });
             gsap.set(".scroll-hint", { opacity: progress < .02 ? 1 : 0 });
+            const robotFade = gsap.utils.clamp(0, 1, (progress - .82) / .18);
             gsap.set(".robot-world", {
               x: isMobile ? 0 : progress > .15 ? Math.min(20, (progress - .15) * 60) : 0,
               scale: isMobile ? 1 : progress > .4 ? 1 - Math.min(.08, (progress - .4) * .14) : 1,
-              opacity: isMobile ? 1 : progress > .82 ? 1 - (progress - .82) / .18 : 1,
+              opacity: isMobile ? 1 : progress > .82 ? 1 - robotFade * .78 : 1,
             });
           },
         },
