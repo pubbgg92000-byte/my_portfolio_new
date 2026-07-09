@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
+import Link from "next/link";
 import {
   ArrowUpRight,
   Bot,
@@ -29,20 +30,49 @@ const experimentIcons = {
 export function FeaturedProjects() {
   const [openExperiment, setOpenExperiment] = useState<string | null>(null);
 
+  const rememberProjectPosition = (projectSlug: string) => {
+    window.sessionStorage.setItem(
+      "portfolioProjectReturn",
+      JSON.stringify({
+        projectSlug,
+        returnHash: `#project-${projectSlug}`,
+        savedAt: Date.now(),
+      }),
+    );
+  };
+
   return (
     <section id="projects" className="featured-projects" aria-labelledby="projects-title">
       <header className="section-heading">
-        <div><p>Selected work / 2026</p><h2 id="projects-title">Featured projects</h2></div>
-        <p>Product interfaces, creative web experiences, and business-facing systems—built as self-initiated, AI-assisted portfolio case studies.</p>
+        <div><p>Selected work</p><h2 id="projects-title">Featured projects</h2></div>
+        <p>Professional contributions, product interfaces, creative web experiences, and business-facing systems built across team projects and self-initiated portfolio work.</p>
       </header>
       <div className="project-list">
         {projects.map((project, index) => (
-          <article className="project-row" key={project.slug}>
+          <article
+            id={`project-${project.slug}`}
+            className="project-row"
+            key={project.slug}
+            style={{ "--project-stack-index": index + 1 } as CSSProperties}
+          >
             <span className="project-number">0{index + 1}</span>
             <div className="project-main">
               <p>{project.category}</p>
               <h3>{project.title}</h3>
               <span>{project.summary}</span>
+              {project.image ? (
+                <figure className="project-media">
+                  <img src={project.image.src} alt={project.image.alt} loading="lazy" />
+                </figure>
+              ) : null}
+              {project.contributions ? (
+                <div className="project-proof" aria-label={`${project.title} contribution highlights`}>
+                  <strong>Contribution</strong>
+                  <ul>
+                    {project.contributions.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </div>
+              ) : null}
               {project.demoCredentials ? (
                 <details className="project-credentials">
                   <summary>Get login creds</summary>
@@ -62,8 +92,16 @@ export function FeaturedProjects() {
             </div>
             <div className="project-meta"><span>{project.status}</span><strong>{project.year}</strong></div>
             <div className="project-links">
-              <a href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`${project.title} source code`}><Github /></a>
-              <a href={project.liveUrl} target="_blank" rel="noreferrer" aria-label={`${project.title} live website`}><ArrowUpRight /></a>
+              <Link
+                href={`/projects/${project.slug}`}
+                aria-label={`${project.title} project details`}
+                onClick={() => rememberProjectPosition(project.slug)}
+              >
+                <ArrowUpRight />
+              </Link>
+              {project.githubUrl ? (
+                <a href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`${project.title} source code`}><Github /></a>
+              ) : null}
             </div>
           </article>
         ))}

@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           fetchPriority="high"
         />
       </head>
-      <body className={`${geist.variable} ${inter.variable} ${mono.variable}`}>{children}</body>
+      <body suppressHydrationWarning className={`${geist.variable} ${inter.variable} ${mono.variable}`}>{children}</body>
     </html>
   );
 }

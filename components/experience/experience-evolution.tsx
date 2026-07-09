@@ -85,9 +85,9 @@ const timeline = [
   },
   {
     year: "2025",
-    arc: "AI",
+    arc: "Applied AI",
     scale: "xlarge",
-    title: "AI Exploration",
+    title: "Applied AI Systems",
     place: "Independent experiments",
     type: "AI-assisted engineering and automation",
     body: "Began integrating AI into development, focusing on prompt engineering, AI workflows, agent design, and LLM integration. Built automation experiments and started learning production AI patterns.",
@@ -120,7 +120,14 @@ const learningMarquee = [
   { label: "Automation", icon: Cpu },
   { label: "GSAP", badge: "G" },
 ];
-const milestones = ["First Website", "First Client", "Frontend Developer", "Built Staffly", "AI Agent", "Portfolio"];
+const milestones = [
+  "HTML & CSS Foundations",
+  "SvelteKit Client Projects",
+  "Professional Frontend Role",
+  "Staffly HRMS Product",
+  "AI Automation Systems",
+  "Interactive Portfolio",
+];
 const certifications = [
   { label: "Generative AI", badge: "AI" },
   { label: "AI Workflow", badge: "WF" },
@@ -163,6 +170,41 @@ export function ExperienceEvolution() {
 
     const context = gsap.context(() => {
       const compactTimeline = window.matchMedia("(max-width: 860px)").matches;
+
+      gsap.fromTo(
+        [".evolution-hero>p", ".evolution-hero>h2", ".evolution-hero>span"],
+        { opacity: 0, y: compactTimeline ? 24 : 38 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: .8,
+          stagger: .12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".evolution-hero",
+            start: "top 82%",
+            once: true,
+          },
+        },
+      );
+
+      gsap.fromTo(".evolution-map strong", {
+        opacity: 0,
+        y: compactTimeline ? 18 : 28,
+        scale: .94,
+      }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: .55,
+        stagger: .11,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: ".evolution-map",
+          start: "top 88%",
+          once: true,
+        },
+      });
 
       gsap.fromTo(".evolution-line-fill", { scaleY: 0 }, {
         scaleY: 1,
@@ -226,6 +268,46 @@ export function ExperienceEvolution() {
           once: true,
         },
       });
+
+      gsap.utils.toArray<HTMLElement>(
+        ".learning-panel, .milestone-panel, .certification-panel, .currently-building, .auto-tech-panel",
+      ).forEach((panel, index) => {
+        gsap.fromTo(panel, {
+          opacity: 0,
+          y: compactTimeline ? 34 : 52,
+          scale: compactTimeline ? .99 : .975,
+        }, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: compactTimeline ? .65 : .85,
+          delay: index % 2 === 1 ? .08 : 0,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: panel,
+            start: compactTimeline ? "top 90%" : "top 84%",
+            once: true,
+          },
+        });
+
+        const items = panel.querySelectorAll<HTMLElement>(
+          ".milestone-panel span, .certification-panel span, .currently-building span, .currently-building aside strong, .auto-tech-panel span",
+        );
+        if (!items.length) return;
+
+        gsap.fromTo(items, { opacity: 0, y: 14 }, {
+          opacity: 1,
+          y: 0,
+          duration: .45,
+          stagger: .055,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: panel,
+            start: compactTimeline ? "top 86%" : "top 78%",
+            once: true,
+          },
+        });
+      });
     }, scope);
 
     return () => context.revert();
@@ -238,7 +320,7 @@ export function ExperienceEvolution() {
         <h2 id="experience-title">THE EVOLUTION</h2>
         <span>Every project, every challenge, every step shaped the engineer I am today.</span>
         <div className="evolution-map" aria-label="Growth path">
-          {["2017", "Mechanical Engineering", "Business", "Frontend Developer", "AI Builder", "Today"].map((item) => (
+          {["2017", "Mechanical Engineering", "Business", "Frontend Developer", "Applied AI", "Today"].map((item) => (
             <strong key={item}>{item}</strong>
           ))}
         </div>
@@ -299,7 +381,7 @@ export function ExperienceEvolution() {
       <div className="evolution-grid">
         <section className="milestone-panel" aria-labelledby="milestone-title">
           <p>Career milestones</p>
-          <h3 id="milestone-title">Proof points that kept the momentum moving</h3>
+          <h3 id="milestone-title">Progress built through practical work</h3>
           <div>
             {milestones.map((item, index) => (
               <span key={item}><Check aria-hidden="true" /><b>{String(index + 1).padStart(2, "0")}</b>{item}</span>
@@ -309,7 +391,7 @@ export function ExperienceEvolution() {
 
         <section className="certification-panel" aria-labelledby="certification-title">
           <p>Certifications</p>
-          <h3 id="certification-title">Courses and credentials</h3>
+          <h3 id="certification-title">Focused learning and credentials</h3>
           <div>
             {certifications.map((item) => (
               <span key={item.label}><b aria-hidden="true">{item.badge}</b>{item.label}</span>
@@ -321,7 +403,7 @@ export function ExperienceEvolution() {
       <section className="currently-building" aria-labelledby="currently-title">
         <div>
           <p>Currently building</p>
-          <h3 id="currently-title">AI, product systems, and polished interactive web work</h3>
+          <h3 id="currently-title">Practical AI and product experiences</h3>
           <div>{building.map((item) => <span key={item}>{item}</span>)}</div>
         </div>
         <aside>

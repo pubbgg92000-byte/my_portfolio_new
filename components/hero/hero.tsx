@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,6 +12,9 @@ import {
 gsap.registerPlugin(ScrollTrigger);
 const FRAME_COUNT = 300;
 const FRAME_LOADERS = 6;
+const VIDEO_START_PROGRESS = 0.58;
+const HERO_FALLBACK_DELAY = 1800;
+const MOBILE_QUERY = "(max-width: 780px)";
 const dynamicWords = [
   "Intelligent",
   "AI-Powered",
@@ -27,7 +31,7 @@ const dynamicWords = [
 const tech = [
   { name: "React", icon: Sparkles }, { name: "Next.js", icon: PanelsTopLeft },
   { name: "TypeScript", icon: Braces }, { name: "GSAP", label: "GSAP" },
-  { name: "Node.js", icon: Server }, { name: "AI", icon: Code2 },
+  { name: "Node.js", icon: Server }, { name: "Applied AI", icon: Code2 },
 ];
 
 const navItems = ["Home", "Projects", "Experience", "About", "Skills", "Contact"];
@@ -46,14 +50,17 @@ const mobileNavItems = [
 export function Hero() {
   const root = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [frameLoadProgress, setFrameLoadProgress] = useState(0);
 
   useEffect(() => {
     const scope = root.current;
     const canvas = canvasRef.current;
+    const video = videoRef.current;
     const context = canvas?.getContext("2d");
-    if (!scope || !canvas || !context) return;
+    if (!scope || !canvas || !context || !video) return;
 
     const images: HTMLImageElement[] = new Array(FRAME_COUNT);
     const playhead = { frame: 0 };
@@ -63,7 +70,12 @@ export function Hero() {
     let idleTween: gsap.core.Tween | null = null;
     let scrollTween: gsap.core.Tween | null = null;
     let projectTrigger: ScrollTrigger | null = null;
+    let fallbackTimer: number | null = null;
+    let resizeTimer: number | null = null;
+    let usingLoadVideo = false;
+    let loadedFrames = 0;
     const navTriggers: ScrollTrigger[] = [];
+    const mobileMotion = window.matchMedia(MOBILE_QUERY).matches;
 
     const setActiveNav = (section: string) => {
       setActiveSection((current) => (current === section ? current : section));
@@ -95,6 +107,25 @@ export function Hero() {
       context.drawImage(image, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
     };
 
+    const playHeroVideo = () => {
+      video.muted = true;
+      video.playsInline = true;
+      const request = video.play();
+      if (request) void request.catch(() => undefined);
+    };
+
+    const setVideoMode = (active: boolean, fallback = false) => {
+      usingLoadVideo = active && fallback;
+      scope.classList.toggle("hero-video-segment-active", active && !fallback);
+      scope.classList.toggle("hero-video-fallback-active", active && fallback);
+      if (active) {
+        playHeroVideo();
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    };
+
     const getWordStep = () => {
       const word = scope.querySelector<HTMLElement>(".dynamic-word-track strong");
       return word?.offsetHeight || 0;
@@ -102,17 +133,15 @@ export function Hero() {
 
     const createScrollStory = () => {
       if (cancelled || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const mobileStory = window.matchMedia("(max-width: 780px)").matches;
+      const mobileStory = mobileMotion;
       if (!mobileStory) {
         idleTween = gsap.to(playhead, { frame: 138, duration: 4.5, ease: "sine.inOut", yoyo: true, repeat: -1, onUpdate: render });
       }
       gsap.set(".dynamic-word-track", { y: 0 });
       gsap.set(".dynamic-word-mask", { clipPath: "none", y: 0 });
       gsap.set(".line-experiences", { clipPath: "none", y: 0 });
-      scrollTween = gsap.to(playhead, {
-        frame: FRAME_COUNT - 1,
+      scrollTween = gsap.to({}, {
         ease: "none",
-        onUpdate: render,
         scrollTrigger: {
           trigger: ".hero-stage",
           start: "top top",
@@ -123,6 +152,15 @@ export function Hero() {
           invalidateOnRefresh: true,
           onUpdate: ({ progress }) => {
             const isMobile = mobileStory;
+            if (mobileMotion) {
+              setVideoMode(true);
+              gsap.set(".scroll-hint", { opacity: progress < .02 ? 1 : 0 });
+              return;
+            }
+            const frameProgress = gsap.utils.clamp(0, 1, progress / VIDEO_START_PROGRESS);
+            playhead.frame = frameProgress * (FRAME_COUNT - 1);
+            render();
+            setVideoMode(progress >= VIDEO_START_PROGRESS);
             if (progress > .005) idleTween?.pause(); else idleTween?.play();
             if (progress < 1) setActiveNav("home");
             const railProgress = gsap.utils.clamp(0, 1, progress);
@@ -213,26 +251,65 @@ export function Hero() {
     const startIntro = () => {
       if (introStarted || cancelled) return;
       introStarted = true;
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+      setFrameLoadProgress(100);
+      usingLoadVideo = false;
+      setVideoMode(mobileMotion || (window.scrollY > 0 && (scrollTween?.scrollTrigger?.progress ?? 0) >= VIDEO_START_PROGRESS));
       canvas.classList.add("ready");
       render();
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         render();
+        window.dispatchEvent(new CustomEvent("heroFramesReady"));
+        return;
+      }
+      if (mobileMotion) {
+        window.requestAnimationFrame(() => {
+          ScrollTrigger.refresh(true);
+          window.dispatchEvent(new CustomEvent("heroFramesReady"));
+        });
         return;
       }
       createScrollStory();
+      window.requestAnimationFrame(() => {
+        ScrollTrigger.refresh(true);
+        window.dispatchEvent(new CustomEvent("heroFramesReady"));
+      });
     };
+
+    fallbackTimer = window.setTimeout(() => {
+      if (introStarted || cancelled) return;
+      setVideoMode(true, true);
+      if (mobileMotion) startIntro();
+    }, HERO_FALLBACK_DELAY);
+
+    if (mobileMotion) {
+      startIntro();
+      return () => {
+        cancelled = true;
+        if (fallbackTimer) window.clearTimeout(fallbackTimer);
+        idleTween?.kill(); projectTrigger?.kill();
+        navTriggers.forEach((trigger) => trigger.kill());
+        scrollTween?.scrollTrigger?.kill(); scrollTween?.kill();
+        video.pause();
+      };
+    }
 
     let nextFrame = 0;
     const loadFrame = (index: number) => new Promise<void>((resolve) => {
+      const markFrameDone = () => {
+        loadedFrames += 1;
+        setFrameLoadProgress(Math.round((loadedFrames / FRAME_COUNT) * 100));
+        resolve();
+      };
       const image = new Image();
       image.decoding = "async";
       image.fetchPriority = index === 0 ? "high" : "low";
       image.onload = () => {
         images[index] = image;
-        if (!cancelled && index === 0) startIntro();
-        resolve();
+        if (!cancelled && index === 0 && !usingLoadVideo) render();
+        markFrameDone();
       };
-      image.onerror = () => resolve();
+      image.onerror = () => markFrameDone();
       image.src = `/images/robot-frames/frame_${String(index).padStart(6, "0")}.png`;
     });
     const loadWorker = async () => {
@@ -243,7 +320,10 @@ export function Hero() {
         await loadFrame(index);
       }
     };
-    void Promise.all(Array.from({ length: FRAME_LOADERS }, loadWorker));
+    void Promise.all(Array.from({ length: FRAME_LOADERS }, loadWorker)).then(() => {
+      if (cancelled) return;
+      startIntro();
+    });
 
     const moveX = gsap.quickTo(canvas, "x", { duration: .6, ease: "power2.out" });
     const moveY = gsap.quickTo(canvas, "y", { duration: .6, ease: "power2.out" });
@@ -254,19 +334,31 @@ export function Hero() {
       gsap.set(".cursor-ring", { x: event.clientX, y: event.clientY });
     };
     window.addEventListener("pointermove", onPointerMove);
-    window.addEventListener("resize", render);
+    const onResize = () => {
+      render();
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        gsap.set(canvas, { x: 0, y: 0 });
+        ScrollTrigger.refresh(true);
+        render();
+      }, 140);
+    };
+    window.addEventListener("resize", onResize);
     return () => {
       cancelled = true;
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+      if (resizeTimer) window.clearTimeout(resizeTimer);
       idleTween?.kill(); projectTrigger?.kill();
       navTriggers.forEach((trigger) => trigger.kill());
       scrollTween?.scrollTrigger?.kill(); scrollTween?.kill();
       window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("resize", render);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
   return (
     <main ref={root} className="portfolio-hero">
+      <a className="skip-link" href="#projects">Skip hero animation</a>
       <div className="cursor-ring" aria-hidden="true" />
       <header data-boot className="main-nav">
         <a href="#home" className="wordmark">ARVIND<span>•</span></a>
@@ -308,6 +400,25 @@ export function Hero() {
         <div className="chest-glow" aria-hidden="true" />
         <div className="robot-world" aria-label="A.R.V.I.N.D animated AI robot">
           <canvas ref={canvasRef} />
+          <video
+            ref={videoRef}
+            src="/videos/backup _hero_video_fallback.mp4"
+            muted
+            playsInline
+            loop
+            preload="metadata"
+            aria-hidden="true"
+          />
+        </div>
+        <div
+          className="hero-loader"
+          aria-live="polite"
+          data-loaded={frameLoadProgress >= 100}
+          style={{ "--hero-load-progress": `${frameLoadProgress}%` } as CSSProperties}
+        >
+          <span>Preparing visual system</span>
+          <strong>{frameLoadProgress}%</strong>
+          <i />
         </div>
 
         <div className="hero-content">

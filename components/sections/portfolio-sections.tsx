@@ -4,21 +4,36 @@ import { useState } from "react";
 import {
   ArrowUpRight,
   Bot,
+  Boxes,
+  Braces,
   BriefcaseBusiness,
   Camera,
   Check,
   ChevronDown,
   Cloud,
   Code2,
+  Container,
   Coffee,
   Cpu,
+  Database,
   Download,
+  FileCode2,
+  GitBranch,
   Github,
+  Globe,
+  Layers3,
   Linkedin,
   Mail,
+  Network,
+  PanelsTopLeft,
   Printer,
   Rocket,
+  Server,
+  Sparkles,
+  Terminal,
   Utensils,
+  WandSparkles,
+  Workflow,
 } from "lucide-react";
 
 const aboutCards = [
@@ -36,35 +51,79 @@ const facts = [
   { label: "Business", icon: BriefcaseBusiness, detail: "Grocery operations taught pricing, customers, inventory, and ownership." },
 ];
 
-const currentlyLearning = ["Next.js", "AI Agents", "Three.js", "System Design", "Docker"];
+type IconType = typeof Code2;
+
+const currentlyLearning = [
+  { label: "Next.js", icon: PanelsTopLeft },
+  { label: "AI Agents", icon: Bot },
+  { label: "Three.js", icon: Boxes },
+  { label: "System Design", icon: Network },
+  { label: "Docker", icon: Container },
+];
+
+type SkillItem = {
+  name: string;
+  icon: IconType;
+};
 
 const skillGroups = [
   {
     title: "Frontend",
     icon: Code2,
-    skills: ["React", "Next.js", "GSAP", "Tailwind", "Svelte", "JavaScript"],
+    skills: [
+      { name: "React", icon: Sparkles },
+      { name: "Next.js", icon: PanelsTopLeft },
+      { name: "JavaScript", icon: Braces },
+      { name: "Tailwind", icon: Layers3 },
+      { name: "Svelte", icon: FileCode2 },
+      { name: "GSAP", icon: WandSparkles },
+    ],
   },
   {
     title: "Backend",
-    icon: Cloud,
-    skills: ["Node.js", "NestJS", "Prisma", "REST APIs", "PostgreSQL"],
+    icon: Server,
+    skills: [
+      { name: "Node.js", icon: Server },
+      { name: "NestJS", icon: Boxes },
+      { name: "REST APIs", icon: Network },
+      { name: "PostgreSQL", icon: Database },
+      { name: "Prisma", icon: GitBranch },
+    ],
   },
   {
-    title: "AI",
+    title: "Applied AI",
     icon: Bot,
-    skills: ["Gemini", "OpenAI", "Claude", "Prompt Engineering", "Agent Workflows"],
+    skills: [
+      { name: "Gemini", icon: Sparkles },
+      { name: "OpenAI", icon: Bot },
+      { name: "Claude", icon: Cpu },
+      { name: "Prompt Engineering", icon: Code2 },
+      { name: "Agent Workflows", icon: Workflow },
+    ],
   },
   {
     title: "Automation",
     icon: Rocket,
-    skills: ["Playwright", "Apps Script", "n8n", "Selenium", "CLI Tools"],
+    skills: [
+      { name: "Playwright", icon: Globe },
+      { name: "Apps Script", icon: FileCode2 },
+      { name: "n8n", icon: Workflow },
+      { name: "Selenium", icon: Check },
+      { name: "CLI Tools", icon: Terminal },
+    ],
   },
   {
     title: "Cloud",
     icon: Cloud,
-    skills: ["Docker", "AWS", "Cloudflare", "Vercel", "GitHub Actions"],
+    skills: [
+      { name: "Docker", icon: Container },
+      { name: "AWS", icon: Cloud },
+      { name: "Cloudflare", icon: Globe },
+      { name: "Vercel", icon: PanelsTopLeft },
+      { name: "GitHub Actions", icon: GitBranch },
+    ],
   },
-];
+] satisfies { title: string; icon: IconType; skills: SkillItem[] }[];
 
 const resumeSummary = [
   { label: "Experience", value: "Frontend Developer at Uncommon Design Services; SaaS UI, API integration, testing, debugging, Cloudflare deployment support." },
@@ -72,8 +131,14 @@ const resumeSummary = [
   { label: "Skills", value: "Svelte, JavaScript, HTML, CSS, Tailwind, REST APIs, Git, Cloudflare, n8n, AI workflows, prompt engineering, Selenium basics." },
 ];
 
-const focusItems = ["AI Agents", "Staffly HRMS", "Interactive Portfolio", "Automation Workflows", "Open To Work"];
-const journeyItems = ["Mechanical", "Business", "Frontend", "AI"];
+const focusItems = [
+  { label: "AI Agents", icon: Bot },
+  { label: "Staffly HRMS", icon: BriefcaseBusiness },
+  { label: "Interactive Portfolio", icon: PanelsTopLeft },
+  { label: "Automation Workflows", icon: Workflow },
+  { label: "Open To Work", icon: Check },
+];
+const journeyItems = ["Mechanical", "Business", "Frontend", "Applied AI"];
 
 const certificates = [
   { achievement: "Generative AI Mastermind", organization: "Outskill", year: "2026", view: "Resume" },
@@ -110,9 +175,8 @@ export function AboutSection() {
   return (
     <section id="about" className="story-section about-section" aria-labelledby="about-title">
       <div className="about-portrait" aria-label="Animated Arvind identity portrait">
-        <div className="portrait-orbit" aria-hidden="true" />
-        <strong>AR</strong>
-        <span>Frontend + AI</span>
+        <img src="/images/my_profile _pic/Arvind_profile.png" alt="Portrait of Arvind" />
+        <span>Frontend + Applied AI</span>
       </div>
       <div className="about-copy">
         <p className="section-kicker">AI & Full Stack Developer</p>
@@ -123,9 +187,7 @@ export function AboutSection() {
         </p>
         <div className="about-journey" aria-label="About journey">
           <div>
-            {[...journeyItems, ...journeyItems].map((item, index) => (
-              <span aria-hidden={index >= journeyItems.length} key={`${item}-${index}`}>{item}</span>
-            ))}
+            {journeyItems.map((item) => <span key={item}>{item}</span>)}
           </div>
         </div>
       </div>
@@ -156,7 +218,9 @@ export function LearningNowSection({ className = "" }: { className?: string }) {
       <p className="section-kicker">Currently learning</p>
       <h2 id="learning-now-title">Current focus</h2>
       <div>
-        {currentlyLearning.map((item) => <span key={item}>{item}</span>)}
+        {currentlyLearning.map(({ label, icon: Icon }) => (
+          <span key={label}><Icon aria-hidden="true" />{label}</span>
+        ))}
       </div>
     </section>
   );
@@ -182,9 +246,10 @@ export function SkillsSection() {
                   <ChevronDown aria-hidden="true" />
                 </button>
                 <div className="skill-panel">
-                  {group.skills.map((skill) => (
-                    <section key={skill}>
-                      <h3>{skill}</h3>
+                  {group.skills.map(({ name, icon: SkillIcon }) => (
+                    <section key={name}>
+                      <span className="skill-mark" aria-hidden="true"><SkillIcon /></span>
+                      <h3>{name}</h3>
                     </section>
                   ))}
                 </div>
@@ -239,7 +304,9 @@ export function CurrentFocusSection({ className = "" }: { className?: string }) 
         <p className="section-kicker">Current focus</p>
         <h2 id="focus-title">Open to full-time and freelance work</h2>
         <div>
-          {focusItems.map((item) => <span key={item}>{item}</span>)}
+          {focusItems.map(({ label, icon: Icon }) => (
+            <span key={label}><Icon aria-hidden="true" />{label}</span>
+          ))}
         </div>
       </section>
   );
