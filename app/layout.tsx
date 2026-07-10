@@ -116,11 +116,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="/images/robot-frames/frame_000000.png"
           fetchPriority="high"
         />
-        <link
-          rel="preload"
-          as="image"
-          href="/og-image.png"
-        />
       </head>
       <body suppressHydrationWarning className={`${geist.variable} ${inter.variable} ${mono.variable}`}>
         <script

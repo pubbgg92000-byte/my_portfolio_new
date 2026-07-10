@@ -433,7 +433,7 @@ export function Hero() {
             </span>
             <span className="line-experiences">Experiences</span>
           </h1>
-          <p data-boot className="hero-summary">I design and build polished product interfaces, internal tools, business websites, and modern frontend experiences—with practical Ai automation support and scalable engineering.</p>
+          <p data-boot className="hero-summary">I design and build polished product interfaces, internal tools, business websites, and modern frontend experiences—with practical automation support and scalable engineering.</p>
           <div className="hero-actions"><a data-boot className="hero-button primary" href="#projects">View selected work <ArrowRight /></a><a data-boot className="hero-button secondary" href="/resume.pdf" download>Download résumé <Download /></a></div>
           <div data-boot className="hero-socials"><span>Find me on</span><a href="https://github.com/pubbgg92000-byte" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/mangalarapu-arvind-dev/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:mangalarapuarvind@gmail.com" aria-label="Email"><Mail /></a></div>
         </div>
