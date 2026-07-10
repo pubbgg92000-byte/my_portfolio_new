@@ -40,7 +40,7 @@ import {
 const aboutCards = [
   { title: "Mission", body: "Build useful products with polished interfaces, reusable components, and practical automation." },
   { title: "Journey", body: "Mechanical engineering, business operations, frontend product work, and modern web application development." },
-  { title: "Current Focus", body: "Frontend systems,AI agents, Staffly HRMS, interactive portfolio systems, and automation workflows." },
+  { title: "Current Focus", body: "Frontend systems, AI agents, agentic workflows, interactive portfolio systems, and automation workflows." },
   { title: "Values", body: "Clarity, ownership, honest learning, business awareness, and interfaces that respect the person using them." },
 ];
 

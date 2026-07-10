@@ -27,6 +27,59 @@ const experimentIcons = {
   "fit-ai-pro": Dumbbell,
 } as const;
 
+const techIcons: Record<string, string> = {
+  "next.js": "N",
+  react: "⚛",
+  "react 19": "⚛",
+  typescript: "TS",
+  javascript: "JS",
+  dart: "D",
+  flutter: "F",
+  sveltekit: "S",
+  "tailwind css": "TW",
+  gsap: "G",
+  "framer motion": "FM",
+  lenis: "L",
+  nestjs: "NJS",
+  postgresql: "PG",
+  prisma: "P",
+  sqlite: "SQL",
+  supabase: "SB",
+  python: "PY",
+  docker: "D",
+  playwright: "PW",
+  "three.js": "3D",
+  r3f: "R3F",
+  vite: "V",
+  storybook: "SB",
+  eleventy: "11",
+  html: "H",
+  "rest apis": "API",
+  "api integration": "API",
+  "provider apis": "API",
+  "telegram bot": "TG",
+  "hugging face": "HF",
+  automation: "⚙",
+  pdf: "PDF",
+  cli: ">_",
+};
+
+function techSlug(name: string) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+function TechTag({ name }: { name: string }) {
+  const normalized = name.toLowerCase();
+  const label = techIcons[normalized] ?? name.slice(0, 2).toUpperCase();
+
+  return (
+    <i>
+      <span className={`tech-chip-icon tech-${techSlug(name)}`} aria-hidden="true">{label}</span>
+      {name}
+    </i>
+  );
+}
+
 export function FeaturedProjects() {
   const [openExperiment, setOpenExperiment] = useState<string | null>(null);
 
@@ -88,7 +141,7 @@ export function FeaturedProjects() {
                   </div>
                 </details>
               ) : null}
-              <div className="project-tags">{project.technologies.map((item) => <i key={item}>{item}</i>)}</div>
+              <div className="project-tags">{project.technologies.map((item) => <TechTag key={item} name={item} />)}</div>
             </div>
             <div className="project-meta"><span>{project.status}</span><strong>{project.year}</strong></div>
             <div className="project-links">
@@ -130,7 +183,7 @@ export function FeaturedProjects() {
                   <ChevronDown aria-hidden="true" />
                 </button>
                 <span>{experiment.summary}</span>
-                <div className="project-tags">{experiment.technologies.map((item) => <i key={item}>{item}</i>)}</div>
+                <div className="project-tags">{experiment.technologies.map((item) => <TechTag key={item} name={item} />)}</div>
                 <div className="experiment-links">
                   <a href={experiment.githubUrl} target="_blank" rel="noreferrer" aria-label={`${experiment.title} source code`}><Github /></a>
                   {experiment.liveUrl ? (
