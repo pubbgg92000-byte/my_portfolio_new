@@ -154,7 +154,7 @@ const certificates = [
 const contactCards = [
   { label: "Email", value: "mangalarapuarvind@gmail.com", href: "mailto:mangalarapuarvind@gmail.com", icon: Mail },
   { label: "GitHub", value: "pubbgg92000-byte", href: "https://github.com/pubbgg92000-byte", icon: Github },
-  { label: "LinkedIn", value: "Arvind M", href: "https://www.linkedin.com/in/arvind-m-6645a8251/", icon: Linkedin },
+  { label: "LinkedIn", value: "Arvind M", href: "www.linkedin.com/in/mangalarapu-arvind-dev", icon: Linkedin },
   { label: "Resume", value: "Download PDF", href: "/resume.pdf", icon: Download },
 ];
 
@@ -232,139 +232,139 @@ export function SkillsSection() {
   const [openSkill, setOpenSkill] = useState("Frontend");
 
   return (
-      <section id="skills" className="story-section skills-section" aria-labelledby="skills-title">
-        <header>
-          <p className="section-kicker">Skills</p>
-          <h2 id="skills-title">Built around the tools I actually use.</h2>
-        </header>
-        <div className="skill-accordion">
-          {skillGroups.map((group) => {
-            const Icon = group.icon;
-            const isOpen = openSkill === group.title;
-            return (
-              <article className={isOpen ? "open" : ""} key={group.title}>
-                <button type="button" onClick={() => setOpenSkill(isOpen ? "" : group.title)} aria-expanded={isOpen}>
-                  <span><Icon aria-hidden="true" />{group.title}</span>
-                  <ChevronDown aria-hidden="true" />
-                </button>
-                <div className="skill-panel">
-                  {group.skills.map(({ name, icon: SkillIcon }) => (
-                    <section key={name}>
-                      <span className="skill-mark" aria-hidden="true"><SkillIcon /></span>
-                      <h3>{name}</h3>
-                    </section>
-                  ))}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
+    <section id="skills" className="story-section skills-section" aria-labelledby="skills-title">
+      <header>
+        <p className="section-kicker">Skills</p>
+        <h2 id="skills-title">Built around the tools I actually use.</h2>
+      </header>
+      <div className="skill-accordion">
+        {skillGroups.map((group) => {
+          const Icon = group.icon;
+          const isOpen = openSkill === group.title;
+          return (
+            <article className={isOpen ? "open" : ""} key={group.title}>
+              <button type="button" onClick={() => setOpenSkill(isOpen ? "" : group.title)} aria-expanded={isOpen}>
+                <span><Icon aria-hidden="true" />{group.title}</span>
+                <ChevronDown aria-hidden="true" />
+              </button>
+              <div className="skill-panel">
+                {group.skills.map(({ name, icon: SkillIcon }) => (
+                  <section key={name}>
+                    <span className="skill-mark" aria-hidden="true"><SkillIcon /></span>
+                    <h3>{name}</h3>
+                  </section>
+                ))}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
 export function ResumeSection({ className = "" }: { className?: string }) {
   return (
-      <section id="resume" className={`story-section resume-section ${className}`.trim()} aria-labelledby="resume-title">
-        <header>
-          <p className="section-kicker">Resume</p>
-          <h2 id="resume-title">Preview, download, print, connect.</h2>
-          <div className="resume-actions">
-            <a href="/resume.pdf" target="_blank" rel="noreferrer"><ArrowUpRight aria-hidden="true" />Preview</a>
-            <a href="/resume.pdf" download><Download aria-hidden="true" />Download</a>
-            <button type="button" onClick={() => window.print()}><Printer aria-hidden="true" />Print</button>
-            <a href="https://www.linkedin.com/in/arvind-m-6645a8251/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" />LinkedIn</a>
-          </div>
-        </header>
-        <div className="resume-command">
-          <div>
-            <span>Frontend Developer</span>
-            <strong>Mangalarapu Arvind</strong>
-            <p>Hyderabad, India</p>
-          </div>
-          <div>
-            <span>Current Direction</span>
-            <strong>AI + Automation</strong>
-            <p>Product interfaces, workflow systems, and practical AI agent experiments.</p>
-          </div>
+    <section id="resume" className={`story-section resume-section ${className}`.trim()} aria-labelledby="resume-title">
+      <header>
+        <p className="section-kicker">Resume</p>
+        <h2 id="resume-title">Preview, download, print, connect.</h2>
+        <div className="resume-actions">
+          <a href="/resume.pdf" target="_blank" rel="noreferrer"><ArrowUpRight aria-hidden="true" />Preview</a>
+          <a href="/resume.pdf" download><Download aria-hidden="true" />Download</a>
+          <button type="button" onClick={() => window.print()}><Printer aria-hidden="true" />Print</button>
+          <a href="www.linkedin.com/in/mangalarapu-arvind-dev" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" />LinkedIn</a>
         </div>
-        <div className="resume-summary">
-          {resumeSummary.map((item) => (
-            <article key={item.label}>
-              <h3>{item.label}</h3>
-              <p>{item.value}</p>
-            </article>
-          ))}
+      </header>
+      <div className="resume-command">
+        <div>
+          <span>Frontend Developer</span>
+          <strong>Mangalarapu Arvind</strong>
+          <p>Hyderabad, India</p>
         </div>
-      </section>
+        <div>
+          <span>Current Direction</span>
+          <strong>AI + Automation</strong>
+          <p>Product interfaces, workflow systems, and practical AI agent experiments.</p>
+        </div>
+      </div>
+      <div className="resume-summary">
+        {resumeSummary.map((item) => (
+          <article key={item.label}>
+            <h3>{item.label}</h3>
+            <p>{item.value}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
 export function CurrentFocusSection({ className = "" }: { className?: string }) {
   return (
-      <section className={`story-section current-focus ${className}`.trim()} aria-labelledby="focus-title">
-        <p className="section-kicker">Current focus</p>
-        <h2 id="focus-title">Open to full-time and freelance work</h2>
-        <div>
-          {focusItems.map(({ label, icon: Icon }) => (
-            <span key={label}><Icon aria-hidden="true" />{label}</span>
-          ))}
-        </div>
-      </section>
+    <section className={`story-section current-focus ${className}`.trim()} aria-labelledby="focus-title">
+      <p className="section-kicker">Current focus</p>
+      <h2 id="focus-title">Open to full-time and freelance work</h2>
+      <div>
+        {focusItems.map(({ label, icon: Icon }) => (
+          <span key={label}><Icon aria-hidden="true" />{label}</span>
+        ))}
+      </div>
+    </section>
   );
 }
 
 export function CertificationsSection({ className = "" }: { className?: string }) {
   return (
-      <section id="certifications" className={`story-section cert-section ${className}`.trim()} aria-labelledby="cert-title">
-        <p className="section-kicker">Certifications</p>
-        <h2 id="cert-title">Achievement trail</h2>
-        <div className="certificate-timeline">
-          {certificates.map((item) => (
-            <article key={item.achievement}>
-              <span>{item.year}</span>
-              <h3>{item.achievement}</h3>
-              <p>{item.organization}</p>
-              <a href="/resume.pdf"><ArrowUpRight aria-hidden="true" />{item.view}</a>
-            </article>
-          ))}
-        </div>
-      </section>
+    <section id="certifications" className={`story-section cert-section ${className}`.trim()} aria-labelledby="cert-title">
+      <p className="section-kicker">Certifications</p>
+      <h2 id="cert-title">Achievement trail</h2>
+      <div className="certificate-timeline">
+        {certificates.map((item) => (
+          <article key={item.achievement}>
+            <span>{item.year}</span>
+            <h3>{item.achievement}</h3>
+            <p>{item.organization}</p>
+            <a href="/resume.pdf"><ArrowUpRight aria-hidden="true" />{item.view}</a>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
 export function ContactSection({ className = "" }: { className?: string }) {
   return (
-      <section id="contact" className={`story-section contact-section ${className}`.trim()} aria-labelledby="contact-title">
-        <p className="section-kicker">Contact</p>
-        <h2 id="contact-title">Let&apos;s build something great</h2>
-        <div className="availability-strip">
-          <strong><Check aria-hidden="true" />Available</strong>
-          <span>Remote</span>
-          <span>Hybrid</span>
-          <span>Freelance</span>
-        </div>
-        <div className="contact-grid">
-          {contactCards.map(({ label, value, href, icon: Icon }) => (
-            <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
-              <Icon aria-hidden="true" />
-              <span>{label}</span>
-              <strong>{value}</strong>
-            </a>
-          ))}
-        </div>
-      </section>
+    <section id="contact" className={`story-section contact-section ${className}`.trim()} aria-labelledby="contact-title">
+      <p className="section-kicker">Contact</p>
+      <h2 id="contact-title">Let&apos;s build something great</h2>
+      <div className="availability-strip">
+        <strong><Check aria-hidden="true" />Available</strong>
+        <span>Remote</span>
+        <span>Hybrid</span>
+        <span>Freelance</span>
+      </div>
+      <div className="contact-grid">
+        {contactCards.map(({ label, value, href, icon: Icon }) => (
+          <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
+            <Icon aria-hidden="true" />
+            <span>{label}</span>
+            <strong>{value}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
   );
 }
 
 export function PortfolioFooter() {
   return (
-      <footer className="system-footer">
-        <p>SYSTEM SHUTDOWN</p>
-        <span>Building Intelligent Experiences</span>
-        <strong>ARVIND</strong>
-        <small>2026</small>
-        <i aria-hidden="true" />
-      </footer>
+    <footer className="system-footer">
+      <p>SYSTEM SHUTDOWN</p>
+      <span>Building Intelligent Experiences</span>
+      <strong>ARVIND</strong>
+      <small>2026</small>
+      <i aria-hidden="true" />
+    </footer>
   );
 }

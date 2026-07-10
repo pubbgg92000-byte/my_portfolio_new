@@ -434,7 +434,7 @@ export function Hero() {
           </h1>
           <p data-boot className="hero-summary">I design and build polished product interfaces, internal tools, business websites, and AI-assisted digital experiences—with thoughtful motion and scalable engineering.</p>
           <div className="hero-actions"><a data-boot className="hero-button primary" href="#projects">View selected work <ArrowRight /></a><a data-boot className="hero-button secondary" href="/resume.pdf" download>Download résumé <Download /></a></div>
-          <div data-boot className="hero-socials"><span>Find me on</span><a href="https://github.com/pubbgg92000-byte" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/arvind-m-6645a8251/" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:mangalarapuarvind@gmail.com" aria-label="Email"><Mail /></a></div>
+          <div data-boot className="hero-socials"><span>Find me on</span><a href="https://github.com/pubbgg92000-byte" aria-label="GitHub"><Github /></a><a href="www.linkedin.com/in/mangalarapu-arvind-dev" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:mangalarapuarvind@gmail.com" aria-label="Email"><Mail /></a></div>
         </div>
 
         <div data-boot className="tech-dock"><p>Core stack</p>{tech.map(({ name, icon: Icon, label }) => <div key={name}>{Icon ? <Icon /> : <b>{label}</b>}<span>{name}</span></div>)}</div>
