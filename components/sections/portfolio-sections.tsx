@@ -23,6 +23,7 @@ import {
   Globe,
   Layers3,
   Linkedin,
+  MapPin,
   Mail,
   Network,
   PanelsTopLeft,
@@ -37,9 +38,9 @@ import {
 } from "lucide-react";
 
 const aboutCards = [
-  { title: "Mission", body: "Build useful products that combine polished interfaces, AI workflows, and practical automation." },
-  { title: "Journey", body: "Mechanical engineering, business operations, frontend product work, and now AI-powered full-stack systems." },
-  { title: "Current Focus", body: "AI agents, Staffly HRMS, interactive portfolio systems, and automation workflows." },
+  { title: "Mission", body: "Build useful products with polished interfaces, reusable components, and practical automation." },
+  { title: "Journey", body: "Mechanical engineering, business operations, frontend product work, and modern web application development." },
+  { title: "Current Focus", body: "Frontend systems,AI agents, Staffly HRMS, interactive portfolio systems, and automation workflows." },
   { title: "Values", body: "Clarity, ownership, honest learning, business awareness, and interfaces that respect the person using them." },
 ];
 
@@ -47,7 +48,7 @@ const facts = [
   { label: "Coffee", icon: Coffee, detail: "Fuel for long debugging sessions and focused build days." },
   { label: "Photography", icon: Camera, detail: "A visual habit that sharpens composition and product presentation." },
   { label: "Cooking", icon: Utensils, detail: "The same patience: prep, timing, taste, iteration." },
-  { label: "Technology", icon: Cpu, detail: "Always testing new tools, workflows, and AI-assisted ways to build." },
+  { label: "Technology", icon: Cpu, detail: "Always testing new tools, workflows, and better ways to build frontend products and Agentic workflows." },
   { label: "Business", icon: BriefcaseBusiness, detail: "Grocery operations taught pricing, customers, inventory, and ownership." },
 ];
 
@@ -93,7 +94,7 @@ const skillGroups = [
     ],
   },
   {
-    title: "Applied AI",
+    title: "AI Tools",
     icon: Bot,
     skills: [
       { name: "Gemini", icon: Sparkles },
@@ -130,7 +131,7 @@ const skillGroups = [
 const resumeSummary = [
   { label: "Experience", value: "Frontend Developer at Uncommon Design Services; SaaS UI, API integration, testing, debugging, Cloudflare deployment support." },
   { label: "Education", value: "B.Tech Mechanical Engineering, Holy Mary Group of Institutions. Diploma Mechanical Engineering, St. Marys Group of Institutions." },
-  { label: "Skills", value: "React, Basic Python, Svelte, JavaScript, HTML, CSS, Tailwind, REST APIs, Git, Cloudflare, n8n, AI workflows, prompt engineering, Selenium basics." },
+  { label: "Skills", value: "React, Svelte, JavaScript, HTML, CSS, Tailwind, REST APIs, Git, Cloudflare, n8n, automation workflows, prompt engineering, Selenium basics." },
 ];
 
 const focusItems = [
@@ -140,7 +141,7 @@ const focusItems = [
   { label: "Automation Workflows", icon: Workflow },
   { label: "Open To Work", icon: Check },
 ];
-const journeyItems = ["Mechanical", "Business", "Frontend", "Applied AI"];
+const journeyItems = ["Mechanical", "Business", "Frontend", "Ai Automation"];
 
 const certificates = [
   { achievement: "Generative AI Mastermind", organization: "Outskill", year: "2026", view: "Resume" },
@@ -154,8 +155,9 @@ const certificates = [
 const contactCards = [
   { label: "Email", value: "mangalarapuarvind@gmail.com", href: "mailto:mangalarapuarvind@gmail.com", icon: Mail },
   { label: "GitHub", value: "pubbgg92000-byte", href: "https://github.com/pubbgg92000-byte", icon: Github },
-  { label: "LinkedIn", value: "Arvind M", href: "www.linkedin.com/in/mangalarapu-arvind-dev", icon: Linkedin },
+  { label: "LinkedIn", value: "Arvind M", href: "https://www.linkedin.com/in/mangalarapu-arvind-dev/", icon: Linkedin },
   { label: "Resume", value: "Download PDF", href: "/resume.pdf", icon: Download },
+  { label: "Location", value: "Hyderabad", href: "https://www.google.com/maps/place/Hyderabad", icon: MapPin },
 ];
 
 export function PortfolioSections() {
@@ -178,14 +180,14 @@ export function AboutSection() {
     <section id="about" className="story-section about-section" aria-labelledby="about-title">
       <div className="about-portrait" aria-label="Animated Arvind identity portrait">
         <img src="/images/my_profile _pic/Arvind_profile.png" alt="Portrait of Arvind" />
-        <span>Frontend + Applied AI</span>
+        <span>Frontend + Automation</span>
       </div>
       <div className="about-copy">
-        <p className="section-kicker">AI & Full Stack Developer</p>
+        <p className="section-kicker">Frontend Developer</p>
         <h2 id="about-title">Hello, I&apos;m Arvind.</h2>
-        <h3>I build intelligent web experiences with frontend craft, business context, and practical AI automation.</h3>
+        <h3>I build modern web experiences with frontend craft, business context, and practical automation.</h3>
         <p>
-          My path started in mechanical engineering, moved through real business operations, and became a software journey focused on frontend systems, SaaS products, AI workflows, and practical automation.
+          My path started in mechanical engineering, moved through real business operations, and became a software journey focused on frontend systems, SaaS products, reusable UI, and practical automation.
         </p>
         <div className="about-journey" aria-label="About journey">
           <div>
@@ -273,7 +275,7 @@ export function ResumeSection({ className = "" }: { className?: string }) {
           <a href="/resume.pdf" target="_blank" rel="noreferrer"><ArrowUpRight aria-hidden="true" />Preview</a>
           <a href="/resume.pdf" download><Download aria-hidden="true" />Download</a>
           <button type="button" onClick={() => window.print()}><Printer aria-hidden="true" />Print</button>
-          <a href="www.linkedin.com/in/mangalarapu-arvind-dev" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" />LinkedIn</a>
+          <a href="https://www.linkedin.com/in/mangalarapu-arvind-dev/" target="_blank" rel="noreferrer"><Linkedin aria-hidden="true" />LinkedIn</a>
         </div>
       </header>
       <div className="resume-command">
@@ -284,8 +286,8 @@ export function ResumeSection({ className = "" }: { className?: string }) {
         </div>
         <div>
           <span>Current Direction</span>
-          <strong>AI + Automation</strong>
-          <p>Product interfaces, workflow systems, and practical AI agent experiments.</p>
+          <strong>Frontend +Ai Automation</strong>
+          <p>Product interfaces, workflow systems, and practical AI tools used as support.</p>
         </div>
       </div>
       <div className="resume-summary">
@@ -360,10 +362,10 @@ export function ContactSection({ className = "" }: { className?: string }) {
 export function PortfolioFooter() {
   return (
     <footer className="system-footer">
-      <p>SYSTEM SHUTDOWN</p>
-      <span>Building Intelligent Experiences</span>
+      <p>© 2026 Arvind</p>
+      <span>arvind-dev.in</span>
       <strong>ARVIND</strong>
-      <small>2026</small>
+      <small>Frontend Developer · Software Developer · Ai Automation · Agentic Workflows</small>
       <i aria-hidden="true" />
     </footer>
   );

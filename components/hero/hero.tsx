@@ -16,12 +16,12 @@ const VIDEO_START_PROGRESS = 0.58;
 const HERO_FALLBACK_DELAY = 1800;
 const MOBILE_QUERY = "(max-width: 780px)";
 const dynamicWords = [
-  "Intelligent",
-  "AI-Powered",
   "Frontend",
-  "Full Stack",
+  "Responsive",
+  "Modern",
+  "Reusable",
   "Automation",
-  "Enterprise",
+  "Accessible",
   "Scalable",
   "Interactive",
   "Creative",
@@ -31,7 +31,7 @@ const dynamicWords = [
 const tech = [
   { name: "React", icon: Sparkles }, { name: "Next.js", icon: PanelsTopLeft },
   { name: "TypeScript", icon: Braces }, { name: "GSAP", label: "GSAP" },
-  { name: "Node.js", icon: Server }, { name: "Applied AI", icon: Code2 },
+  { name: "Node.js", icon: Server }, { name: "AI Tools", icon: Code2 },
 ];
 
 const navItems = ["Home", "Projects", "About", "Skills", "Contact"];
@@ -416,13 +416,14 @@ export function Hero() {
           data-loaded={frameLoadProgress >= 100}
           style={{ "--hero-load-progress": `${frameLoadProgress}%` } as CSSProperties}
         >
-          <span>Preparing visual system</span>
-          <strong>{frameLoadProgress}%</strong>
+          <span>Arvind</span>
+          <strong>Software Developer</strong>
+          <em>Loading... {frameLoadProgress}%</em>
           <i />
         </div>
 
         <div className="hero-content">
-          <p data-boot className="hero-label"><i /> AI-powered frontend engineer</p>
+          <p data-boot className="hero-label"><i /> Frontend developer</p>
           <h1 id="hero-title">
             <span className="line-building">Building</span>
             <span className="dynamic-word-mask" aria-live="polite">
@@ -432,9 +433,9 @@ export function Hero() {
             </span>
             <span className="line-experiences">Experiences</span>
           </h1>
-          <p data-boot className="hero-summary">I design and build polished product interfaces, internal tools, business websites, and AI-assisted digital experiences—with thoughtful motion and scalable engineering.</p>
+          <p data-boot className="hero-summary">I design and build polished product interfaces, internal tools, business websites, and modern frontend experiences—with practical Ai automation support and scalable engineering.</p>
           <div className="hero-actions"><a data-boot className="hero-button primary" href="#projects">View selected work <ArrowRight /></a><a data-boot className="hero-button secondary" href="/resume.pdf" download>Download résumé <Download /></a></div>
-          <div data-boot className="hero-socials"><span>Find me on</span><a href="https://github.com/pubbgg92000-byte" aria-label="GitHub"><Github /></a><a href="www.linkedin.com/in/mangalarapu-arvind-dev" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:mangalarapuarvind@gmail.com" aria-label="Email"><Mail /></a></div>
+          <div data-boot className="hero-socials"><span>Find me on</span><a href="https://github.com/pubbgg92000-byte" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/mangalarapu-arvind-dev/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:mangalarapuarvind@gmail.com" aria-label="Email"><Mail /></a></div>
         </div>
 
         <div data-boot className="tech-dock"><p>Core stack</p>{tech.map(({ name, icon: Icon, label }) => <div key={name}>{Icon ? <Icon /> : <b>{label}</b>}<span>{name}</span></div>)}</div>
