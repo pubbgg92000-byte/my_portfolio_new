@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ArrowUpRight,
   Bot,
@@ -144,12 +144,14 @@ const focusItems = [
 const journeyItems = ["Mechanical", "Business", "Frontend", "Ai Automation"];
 
 const certificates = [
-  { achievement: "Generative AI Mastermind", organization: "Outskill", year: "2026", view: "Resume" },
-  { achievement: "AI Automation and Workflow Building", organization: "Self-Learning", year: "2026", view: "Resume" },
-  { achievement: "n8n Workflow Automation", organization: "Self-Learning", year: "2026", view: "Resume" },
-  { achievement: "Prompt Engineering and AI Tool Usage", organization: "Self-Learning", year: "2026", view: "Resume" },
-  { achievement: "Frontend Development with Svelte and Tailwind CSS", organization: "Hands-on Training", year: "2024", view: "Resume" },
   { achievement: "Selenium Automation Testing Basics", organization: "Course/Practice", year: "2024", view: "Resume" },
+  { achievement: "Frontend Development with Svelte and Tailwind CSS", organization: "Hands-on Training", year: "2024", view: "Resume" },
+  { achievement: "Prompt Engineering and AI Tool Usage", organization: "Self-Learning", year: "2026", view: "Resume" },
+  { achievement: "n8n Workflow Automation", organization: "Self-Learning", year: "2026", view: "Resume" },
+  { achievement: "AI Automation and Workflow Building", organization: "Self-Learning", year: "2026", view: "Resume" },
+  { achievement: "Playwright Automation Testing", organization: "Self-Learning", year: "2026", view: "Resume" },
+  { achievement: "Generative AI Mastermind", organization: "Outskill", year: "2026", view: "Resume" },
+  { achievement: "More new tech to learn...", organization: "Continuous Learning", year: "?", view: "" },
 ];
 
 const contactCards = [
@@ -219,8 +221,10 @@ export function AboutSection() {
 export function LearningNowSection({ className = "" }: { className?: string }) {
   return (
     <section className={`story-section learning-now ${className}`.trim()} aria-labelledby="learning-now-title">
-      <p className="section-kicker">Currently learning</p>
-      <h2 id="learning-now-title">Current focus</h2>
+      <header>
+        <p className="section-kicker">Currently learning</p>
+        <h2 id="learning-now-title">Current focus</h2>
+      </header>
       <div>
         {currentlyLearning.map(({ label, icon: Icon }) => (
           <span key={label}><Icon aria-hidden="true" />{label}</span>
@@ -305,8 +309,10 @@ export function ResumeSection({ className = "" }: { className?: string }) {
 export function CurrentFocusSection({ className = "" }: { className?: string }) {
   return (
     <section className={`story-section current-focus ${className}`.trim()} aria-labelledby="focus-title">
-      <p className="section-kicker">Current focus</p>
-      <h2 id="focus-title">Open to full-time and freelance work</h2>
+      <header>
+        <p className="section-kicker">Current focus</p>
+        <h2 id="focus-title">Open to full-time and freelance work</h2>
+      </header>
       <div>
         {focusItems.map(({ label, icon: Icon }) => (
           <span key={label}><Icon aria-hidden="true" />{label}</span>
@@ -317,17 +323,67 @@ export function CurrentFocusSection({ className = "" }: { className?: string }) 
 }
 
 export function CertificationsSection({ className = "" }: { className?: string }) {
+  const containerRef = useRef<HTMLElement>(null);
+  const [progress, setProgress] = useState(0);
+  const [activeIndexes, setActiveIndexes] = useState<number[]>([]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const timelineEl = containerRef.current.querySelector('.certificate-timeline');
+      if (!timelineEl) return;
+      
+      const timelineRect = timelineEl.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const activationLine = windowHeight * 0.75; // The line on screen that fills the bar
+      
+      const scrolled = activationLine - timelineRect.top;
+      let newProgress = scrolled / timelineRect.height;
+      newProgress = Math.max(0, Math.min(1, newProgress));
+      setProgress(newProgress);
+      
+      const articles = timelineEl.querySelectorAll('article');
+      const newActiveIndexes: number[] = [];
+      articles.forEach((article, index) => {
+        const articleRect = article.getBoundingClientRect();
+        if (articleRect.top + 10 < activationLine) {
+          newActiveIndexes.push(index);
+        }
+      });
+      
+      // Update state if changed
+      setActiveIndexes((prev) => {
+        if (prev.length !== newActiveIndexes.length) return newActiveIndexes;
+        // Also check if contents are identical (though length check is usually enough here)
+        const isSame = prev.every((v, i) => v === newActiveIndexes[i]);
+        return isSame ? prev : newActiveIndexes;
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Init
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section id="certifications" className={`story-section cert-section ${className}`.trim()} aria-labelledby="cert-title">
-      <p className="section-kicker">Certifications</p>
-      <h2 id="cert-title">Achievement trail</h2>
+    <section 
+      ref={containerRef}
+      id="certifications" 
+      className={`story-section cert-section ${className}`.trim()} 
+      aria-labelledby="cert-title"
+      style={{ "--timeline-progress": progress } as React.CSSProperties}
+    >
+      <header>
+        <p className="section-kicker">Certifications</p>
+        <h2 id="cert-title">Achievement trail</h2>
+      </header>
       <div className="certificate-timeline">
-        {certificates.map((item) => (
-          <article key={item.achievement}>
+        {certificates.map((item, index) => (
+          <article key={item.achievement} className={activeIndexes.includes(index) ? "active" : ""}>
             <span>{item.year}</span>
             <h3>{item.achievement}</h3>
             <p>{item.organization}</p>
-            <a href="/resume.pdf"><ArrowUpRight aria-hidden="true" />{item.view}</a>
+            {item.view ? <a href="/resume.pdf"><ArrowUpRight aria-hidden="true" />{item.view}</a> : null}
           </article>
         ))}
       </div>
@@ -335,11 +391,43 @@ export function CertificationsSection({ className = "" }: { className?: string }
   );
 }
 
+function ContactCard({ item }: { item: typeof contactCards[0] }) {
+  const [mousePos, setMousePos] = useState({ x: '50%', y: '50%' });
+
+  const handleMouseEvent = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    setMousePos({
+      x: `${(x / rect.width) * 100}%`,
+      y: `${(y / rect.height) * 100}%`
+    });
+  };
+
+  return (
+    <a 
+      href={item.href} 
+      target={item.href.startsWith("http") ? "_blank" : undefined} 
+      rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+      onMouseEnter={handleMouseEvent}
+      onMouseLeave={handleMouseEvent}
+      style={{ "--x": mousePos.x, "--y": mousePos.y } as React.CSSProperties}
+    >
+      <item.icon aria-hidden="true" />
+      <span>{item.label}</span>
+      <strong>{item.value}</strong>
+    </a>
+  );
+}
+
 export function ContactSection({ className = "" }: { className?: string }) {
   return (
     <section id="contact" className={`story-section contact-section ${className}`.trim()} aria-labelledby="contact-title">
-      <p className="section-kicker">Contact</p>
-      <h2 id="contact-title">Let&apos;s build something great</h2>
+      <header>
+        <p className="section-kicker">Contact</p>
+        <h2 id="contact-title">Let&apos;s build something great</h2>
+      </header>
       <div className="availability-strip">
         <strong><Check aria-hidden="true" />Available</strong>
         <span>Remote</span>
@@ -347,12 +435,8 @@ export function ContactSection({ className = "" }: { className?: string }) {
         <span>Freelance</span>
       </div>
       <div className="contact-grid">
-        {contactCards.map(({ label, value, href, icon: Icon }) => (
-          <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
-            <Icon aria-hidden="true" />
-            <span>{label}</span>
-            <strong>{value}</strong>
-          </a>
+        {contactCards.map((item) => (
+          <ContactCard key={item.label} item={item} />
         ))}
       </div>
     </section>

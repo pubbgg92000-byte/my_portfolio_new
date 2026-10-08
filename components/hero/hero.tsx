@@ -438,7 +438,7 @@ export function Hero() {
           <div data-boot className="hero-socials"><span>Find me on</span><a href="https://github.com/pubbgg92000-byte" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/mangalarapu-arvind-dev/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:mangalarapuarvind@gmail.com" aria-label="Email"><Mail /></a></div>
         </div>
 
-        <div data-boot className="tech-dock"><p>Core stack</p>{tech.map(({ name, icon: Icon, label }) => <div key={name}>{Icon ? <Icon /> : <b>{label}</b>}<span>{name}</span></div>)}</div>
+        <div data-boot className="tech-dock"><p>Core technologies</p>{tech.map(({ name, icon: Icon, label }) => <div key={name}>{Icon ? <Icon /> : <b>{label}</b>}<span>{name}</span></div>)}</div>
         <a data-boot className="scroll-hint" href="#projects"><ArrowDown /> Scroll to activate</a>
       </section>
     </main>

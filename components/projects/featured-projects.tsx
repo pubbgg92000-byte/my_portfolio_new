@@ -111,11 +111,25 @@ export function FeaturedProjects() {
             <span className="project-number">0{index + 1}</span>
             <div className="project-main">
               <p>{project.category}</p>
-              <h3>{project.title}</h3>
+              <h3>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  onClick={() => rememberProjectPosition(project.slug)}
+                  className="project-title-link"
+                >
+                  {project.title}
+                </Link>
+              </h3>
               <span>{project.summary}</span>
               {project.image ? (
                 <figure className="project-media">
-                  <img src={project.image.src} alt={project.image.alt} loading="lazy" />
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    aria-label={`View ${project.title} project details`}
+                    onClick={() => rememberProjectPosition(project.slug)}
+                  >
+                    <img src={project.image.src} alt={project.image.alt} loading="lazy" />
+                  </Link>
                 </figure>
               ) : null}
               {project.contributions ? (
