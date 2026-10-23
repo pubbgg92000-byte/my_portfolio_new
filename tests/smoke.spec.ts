@@ -53,3 +53,28 @@ test("open graph image renders for a project", async ({ request }) => {
   expect(response.status()).toBe(200);
   expect(response.headers()["content-type"]).toContain("image/png");
 });
+
+test("3D studio exposes accessible navigation and project content", async ({ page }) => {
+  await page.goto("/3d?fallback=1");
+  await page.getByRole("button", { name: /enter the studio/i }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/frontend craft/i);
+  if (await page.getByRole("button", { name: /explore/i }).isVisible()) {
+    await page.getByRole("button", { name: /explore/i }).click();
+  }
+  await page.getByRole("button", { name: /projects/i }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/six builds/i);
+  await page.getByRole("button", { name: /staffly/i }).last().click();
+  await expect(page.getByRole("complementary", { name: /staffly details/i })).toBeVisible();
+});
+
+test("3D studio fallback retains all sections and classic portfolio link", async ({ page }) => {
+  await page.goto("/3d?fallback=1");
+  await expect(page.getByText(/3d fallback mode/i)).toBeVisible();
+  await expect(page.getByRole("link", { name: /classic portfolio/i })).toHaveAttribute("href", "/");
+  await page.getByRole("button", { name: /enter the studio/i }).click();
+  if (await page.getByRole("button", { name: /explore/i }).isVisible()) {
+    await page.getByRole("button", { name: /explore/i }).click();
+  }
+  await page.getByRole("button", { name: /contact/i }).click();
+  await expect(page.getByRole("link", { name: /download résumé/i })).toBeVisible();
+});

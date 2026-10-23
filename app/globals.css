@@ -6012,6 +6012,23 @@ body:has(.gallery-lightbox[open]) {
   gap: 18px
 }
 
+.nav-studio {
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 106, 0, .5);
+  border-radius: 5px;
+  color: #fff;
+  font: 600 9px var(--font-mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: rgba(255, 106, 0, .08);
+  transition: border-color .2s, background .2s
+}
+
+.nav-studio:hover {
+  border-color: var(--orange);
+  background: rgba(255, 106, 0, .16)
+}
+
 .palette-trigger {
   min-height: 34px;
   padding: 0 10px;
@@ -6326,6 +6343,8 @@ body:has(.command-palette[open]) {
   .nav-actions {
     gap: 10px
   }
+
+  .nav-studio { display: none }
 
   .palette-trigger {
     width: 42px;

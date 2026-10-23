@@ -23,6 +23,7 @@ const mobileNavItems = [
   { label: "Focus", href: "/focus" },
   { label: "Certifications", href: "/certifications" },
   { label: "Contact", href: "/contact" },
+  { label: "3D Studio", href: "/3d" },
 ];
 
 type SiteHeaderProps = {
@@ -80,6 +81,7 @@ export function SiteHeader({ activeSection }: SiteHeaderProps) {
         {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
       </button>
       <div className="nav-actions">
+        <Link className="nav-studio" href="/3d">Enter 3D</Link>
         <button
           type="button"
           className="palette-trigger"

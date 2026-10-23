@@ -1,4 +1,5 @@
 import { experiments, projects } from "@/content/projects/projects";
+import { profile, profileEmailUrl } from "@/content/profile";
 
 export type PaletteItem = {
   id: string;
@@ -15,6 +16,7 @@ export type PaletteItem = {
 export function buildPaletteItems(): PaletteItem[] {
   const navigate: PaletteItem[] = [
     { id: "nav-home", label: "Home", hint: "Top of the site", group: "Navigate", href: "/#home" },
+    { id: "nav-3d", label: "3D Interactive Studio", hint: "Enter the portfolio park", group: "Navigate", href: "/3d", keywords: "three gsap spatial immersive" },
     { id: "nav-projects", label: "Projects", hint: "Featured work", group: "Navigate", href: "/#projects" },
     { id: "nav-about", label: "About", hint: "Who I am", group: "Navigate", href: "/#about" },
     { id: "nav-skills", label: "Skills", hint: "Tools I use", group: "Navigate", href: "/#skills" },
@@ -46,11 +48,11 @@ export function buildPaletteItems(): PaletteItem[] {
   }));
 
   const actions: PaletteItem[] = [
-    { id: "act-resume", label: "Download resume PDF", group: "Actions", href: "/resume.pdf", external: true, keywords: "cv download" },
-    { id: "act-copy-email", label: "Copy email address", hint: "mangalarapuarvind@gmail.com", group: "Actions", action: "copy-email" },
-    { id: "act-email", label: "Send an email", group: "Actions", href: "mailto:mangalarapuarvind@gmail.com", external: true },
-    { id: "act-github", label: "Open GitHub profile", group: "Actions", href: "https://github.com/pubbgg92000-byte", external: true },
-    { id: "act-linkedin", label: "Open LinkedIn", group: "Actions", href: "https://www.linkedin.com/in/mangalarapu-arvind-dev/", external: true },
+    { id: "act-resume", label: "Download resume PDF", group: "Actions", href: profile.resumeUrl, external: true, keywords: "cv download" },
+    { id: "act-copy-email", label: "Copy email address", hint: profile.email, group: "Actions", action: "copy-email" },
+    { id: "act-email", label: "Send an email", group: "Actions", href: profileEmailUrl, external: true },
+    { id: "act-github", label: "Open GitHub profile", group: "Actions", href: profile.socials.github, external: true },
+    { id: "act-linkedin", label: "Open LinkedIn", group: "Actions", href: profile.socials.linkedin, external: true },
   ];
 
   return [...navigate, ...projectItems, ...experimentItems, ...actions];

@@ -30,6 +30,12 @@ export type Project = {
     password: string;
     loginUrl: string;
   }[];
+  studio?: {
+    featured: boolean;
+    order: number;
+    accent: string;
+    object: "console" | "monolith" | "portal";
+  };
 };
 
 export type Experiment = {
@@ -40,11 +46,18 @@ export type Experiment = {
   technologies: string[];
   githubUrl: string;
   liveUrl?: string;
+  studio?: {
+    featured: boolean;
+    order: number;
+    accent: string;
+    object: "console" | "monolith" | "portal";
+  };
 };
 
 export const projects: Project[] = [
   {
     slug: "meals-sdk-monorepo",
+    studio: { featured: true, order: 6, accent: "#f7a53b", object: "console" },
     title: "Meals SDK & Monorepo",
     year: "2024-2025",
     category: "Professional contribution / Multi-client platform",
@@ -85,6 +98,7 @@ export const projects: Project[] = [
   },
   {
     slug: "apex-admin-panels",
+    studio: { featured: true, order: 4, accent: "#8b7dff", object: "monolith" },
     title: "Apex Admin Panels",
     year: "2024-2025",
     category: "Professional contribution / Enterprise dashboards",
@@ -124,6 +138,7 @@ export const projects: Project[] = [
   },
   {
     slug: "apex-design-system",
+    studio: { featured: true, order: 5, accent: "#22d3a7", object: "console" },
     title: "Apex Design System",
     year: "2024-2025",
     category: "Professional contribution / Component system",
@@ -214,6 +229,7 @@ export const projects: Project[] = [
   },
   {
     slug: "staffly",
+    studio: { featured: true, order: 1, accent: "#74f0ff", object: "portal" },
     title: "Staffly",
     year: "2026",
     category: "HRMS / Internal product",
@@ -261,6 +277,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sculpt-verse",
+    studio: { featured: true, order: 2, accent: "#ffb36b", object: "monolith" },
     title: "Sculpt Verse",
     year: "2026",
     category: "Immersive editorial web",
@@ -345,6 +362,7 @@ export const experiments: Experiment[] = [
   },
   {
     slug: "3d-animal-world",
+    studio: { featured: true, order: 3, accent: "#9eff6f", object: "portal" },
     title: "Wild Trails",
     category: "Interactive 3D ecosystem",
     summary: "A React Three Fiber nature experience with seeded meadow generation, dynamic time-of-day, water systems, autonomous wildlife needs, and ecosystem commands.",
