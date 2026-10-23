@@ -6,8 +6,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowDown, ArrowRight, Braces, Code2, Download, Github,
-  Linkedin, Mail, Menu, PanelsTopLeft, Server, Sparkles, X,
+  Linkedin, Mail, PanelsTopLeft, Server, Sparkles, WandSparkles,
 } from "lucide-react";
+import { SiteHeader, navSections } from "@/components/nav/site-header";
 
 gsap.registerPlugin(ScrollTrigger);
 const FRAME_COUNT = 300;
@@ -30,28 +31,16 @@ const dynamicWords = [
 
 const tech = [
   { name: "React", icon: Sparkles }, { name: "Next.js", icon: PanelsTopLeft },
-  { name: "TypeScript", icon: Braces }, { name: "GSAP", label: "GSAP" },
+  { name: "TypeScript", icon: Braces }, { name: "GSAP", icon: WandSparkles },
   { name: "Node.js", icon: Server }, { name: "AI Tools", icon: Code2 },
 ];
 
-const navItems = ["Home", "Projects", "About", "Skills", "Contact"];
-const mobileNavItems = [
-  { label: "Home", href: "/#home" },
-  { label: "Projects", href: "/#projects" },
-  { label: "About", href: "/#about" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Resume", href: "/resume" },
-  { label: "Focus", href: "/focus" },
-  { label: "Certifications", href: "/certifications" },
-  { label: "Contact", href: "/contact" },
-];
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeSection, setActiveSection] = useState("home");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [frameLoadProgress, setFrameLoadProgress] = useState(0);
 
   useEffect(() => {
@@ -232,8 +221,8 @@ export function Hero() {
           onLeaveBack: () => setActiveNav("home"),
         }));
       }
-      navItems
-        .map((label) => label.toLowerCase())
+      navSections
+        .map(({ section }) => section)
         .filter((section) => section !== "home" && section !== "projects")
         .forEach((section) => {
           const element = document.getElementById(section);
@@ -310,7 +299,7 @@ export function Hero() {
         markFrameDone();
       };
       image.onerror = () => markFrameDone();
-      image.src = `/images/robot-frames/frame_${String(index).padStart(6, "0")}.png`;
+      image.src = `/images/robot-frames/frame_${String(index).padStart(6, "0")}.webp`;
     });
     const loadWorker = async () => {
       while (!cancelled) {
@@ -360,49 +349,17 @@ export function Hero() {
     <main ref={root} className="portfolio-hero">
       <a className="skip-link" href="#projects">Skip hero animation</a>
       <div className="cursor-ring" aria-hidden="true" />
-      <header data-boot className="main-nav">
-        <a href="#home" className="wordmark">ARVIND<span>•</span></a>
-        <nav aria-label="Primary navigation">
-          {navItems.map((label) => {
-            const section = label.toLowerCase();
-            const isActive = activeSection === section;
-            return (
-              <a
-                key={label}
-                href={`#${section}`}
-                className={isActive ? "active" : undefined}
-                aria-current={isActive ? "page" : undefined}
-              >
-                {label}
-              </a>
-            );
-          })}
-        </nav>
-        <button
-          className="mobile-menu-toggle"
-          type="button"
-          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={mobileMenuOpen}
-          onClick={() => setMobileMenuOpen((open) => !open)}
-        >
-          {mobileMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
-        <a className="nav-contact" href="/resume.pdf" download>Download resume <span /></a>
-        <div className={`mobile-menu-panel${mobileMenuOpen ? " open" : ""}`}>
-          {mobileNavItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)}>{item.label}</a>
-          ))}
-        </div>
-      </header>
+      <SiteHeader activeSection={activeSection} />
 
       <section id="home" className="hero-stage" aria-labelledby="hero-title">
         <div className="ambient-rings" aria-hidden="true" />
         <div className="chest-glow" aria-hidden="true" />
-        <div className="robot-world" aria-label="A.R.V.I.N.D animated AI robot">
+        <div className="robot-world" role="img" aria-label="Animated AI robot illustration">
           <canvas ref={canvasRef} />
           <video
             ref={videoRef}
-            src="/videos/backup _hero_video_fallback.mp4"
+            src="/videos/hero-fallback.mp4"
+            poster="/images/robot-frames/frame_000000.webp"
             muted
             playsInline
             loop
@@ -412,7 +369,11 @@ export function Hero() {
         </div>
         <div
           className="hero-loader"
-          aria-live="polite"
+          role="progressbar"
+          aria-label="Loading hero animation"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={frameLoadProgress}
           data-loaded={frameLoadProgress >= 100}
           style={{ "--hero-load-progress": `${frameLoadProgress}%` } as CSSProperties}
         >
@@ -425,20 +386,21 @@ export function Hero() {
         <div className="hero-content">
           <p data-boot className="hero-label"><i /> Frontend developer</p>
           <h1 id="hero-title">
-            <span className="line-building">Building</span>
-            <span className="dynamic-word-mask" aria-live="polite">
+            <span className="sr-only">Building frontend experiences</span>
+            <span className="line-building" aria-hidden="true">Building</span>
+            <span className="dynamic-word-mask" aria-hidden="true">
               <span className="dynamic-word-track">
                 {dynamicWords.map((word) => <strong key={word}>{word}</strong>)}
               </span>
             </span>
-            <span className="line-experiences">Experiences</span>
+            <span className="line-experiences" aria-hidden="true">Experiences</span>
           </h1>
           <p data-boot className="hero-summary">I design and build polished product interfaces, internal tools, business websites, and modern frontend experiences—with practical automation support and scalable engineering.</p>
           <div className="hero-actions"><a data-boot className="hero-button primary" href="#projects">View selected work <ArrowRight /></a><a data-boot className="hero-button secondary" href="/resume.pdf" download>Download résumé <Download /></a></div>
           <div data-boot className="hero-socials"><span>Find me on</span><a href="https://github.com/pubbgg92000-byte" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/mangalarapu-arvind-dev/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:mangalarapuarvind@gmail.com" aria-label="Email"><Mail /></a></div>
         </div>
 
-        <div data-boot className="tech-dock"><p>Core technologies</p>{tech.map(({ name, icon: Icon, label }) => <div key={name}>{Icon ? <Icon /> : <b>{label}</b>}<span>{name}</span></div>)}</div>
+        <div data-boot className="tech-dock"><p>Core technologies</p>{tech.map(({ name, icon: Icon }) => <div key={name}><Icon aria-hidden="true" /><span>{name}</span></div>)}</div>
         <a data-boot className="scroll-hint" href="#projects"><ArrowDown /> Scroll to activate</a>
       </section>
     </main>

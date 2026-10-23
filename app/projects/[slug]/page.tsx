@@ -1,5 +1,9 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check, ExternalLink, Image as ImageIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ExternalLink, Github, Image as ImageIcon } from "lucide-react";
+import { SiteHeader } from "@/components/nav/site-header";
+import { ProjectGallery } from "@/components/projects/project-gallery";
+import { responsiveImage } from "@/lib/responsive-image";
 import { PortfolioFooter } from "@/components/sections/portfolio-sections";
 import { projects } from "@/content/projects/projects";
 import { ProjectBackButton } from "./project-back-button";
@@ -19,22 +23,31 @@ export async function generateMetadata({ params }: ProjectPageProps) {
   if (!project) return {};
 
   return {
-    title: `${project.title} — Project Details`,
+    title: project.title,
     description: project.summary,
+    alternates: { canonical: `/projects/${project.slug}` },
+    // Social card comes from opengraph-image.tsx in this segment.
   };
 }
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const projectIndex = projects.findIndex((item) => item.slug === slug);
+  const project = projects[projectIndex];
 
   if (!project) notFound();
 
+  const previousProject = projects[projectIndex - 1];
+  const nextProject = projects[projectIndex + 1];
   const gallery = project.gallery ?? (project.image ? [{ ...project.image, caption: "Project preview" }] : []);
 
   return (
     <main className="project-detail-page">
-      <ProjectBackButton />
+      <SiteHeader activeSection="projects" />
+      <div className="page-topbar">
+        <ProjectBackButton />
+        <span className="page-topbar-count">Project {String(projectIndex + 1).padStart(2, "0")} of {String(projects.length).padStart(2, "0")}</span>
+      </div>
 
       <section className="project-detail-hero" aria-labelledby="project-detail-title">
         <div>
@@ -42,23 +55,31 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <h1 id="project-detail-title">{project.title}</h1>
           <span>{project.summary}</span>
           <div className="project-detail-meta">
-            <strong>{project.role ?? project.status}</strong>
+            {project.role ? <strong>{project.role}</strong> : null}
             <strong>{project.year}</strong>
             <strong>{project.status}</strong>
           </div>
-          {project.liveUrl ? (
+          {project.liveUrl || project.githubUrl ? (
             <div className="project-detail-actions">
-              <a href={project.liveUrl} target="_blank" rel="noreferrer">
-                View live website
-                <ExternalLink aria-hidden="true" />
-              </a>
+              {project.liveUrl ? (
+                <a href={project.liveUrl} target="_blank" rel="noreferrer" aria-label={`View live website: ${project.title} (opens in new tab)`}>
+                  View live website
+                  <ExternalLink aria-hidden="true" />
+                </a>
+              ) : null}
+              {project.githubUrl ? (
+                <a className="ghost" href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`View source: ${project.title} on GitHub (opens in new tab)`}>
+                  View source
+                  <Github aria-hidden="true" />
+                </a>
+              ) : null}
             </div>
           ) : null}
         </div>
 
         {project.image ? (
           <figure>
-            <img src={project.image.src} alt={project.image.alt} />
+            <img {...responsiveImage(project.image.src)} sizes="(max-width: 780px) 100vw, 50vw" alt={project.image.alt} fetchPriority="high" decoding="async" />
           </figure>
         ) : (
           <aside className="project-detail-placeholder">
@@ -117,14 +138,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <p className="section-kicker">Screens</p>
             <h2 id="gallery-title">Project visuals</h2>
           </header>
-          <div>
-            {gallery.map((image) => (
-              <figure key={image.src}>
-                <img src={image.src} alt={image.alt} loading="lazy" />
-                <figcaption>{image.caption}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <ProjectGallery images={gallery} title={project.title} />
         </section>
       ) : null}
 
@@ -152,6 +166,22 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         </section>
       ) : null}
+
+      <nav className="project-pagination" aria-label="Browse other projects">
+        {previousProject ? (
+          <Link href={`/projects/${previousProject.slug}`} className="prev">
+            <span><ArrowLeft aria-hidden="true" />Previous project</span>
+            <strong>{previousProject.title}</strong>
+          </Link>
+        ) : <span className="spacer" aria-hidden="true" />}
+        <Link href="/#projects" className="all">All projects</Link>
+        {nextProject ? (
+          <Link href={`/projects/${nextProject.slug}`} className="next">
+            <span>Next project<ArrowRight aria-hidden="true" /></span>
+            <strong>{nextProject.title}</strong>
+          </Link>
+        ) : <span className="spacer" aria-hidden="true" />}
+      </nav>
 
       <PortfolioFooter />
     </main>

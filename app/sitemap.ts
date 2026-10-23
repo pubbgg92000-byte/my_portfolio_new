@@ -4,7 +4,7 @@ import { projects } from "@/content/projects/projects";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://arvind-dev.in";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/contact", "/resume", "/focus", "/certifications"];
+  const routes = ["", "/contact", "/resume", "/focus", "/certifications", "/journey"];
 
   const staticRoutes = routes.map((route) => ({
     url: `${siteUrl}${route}`,

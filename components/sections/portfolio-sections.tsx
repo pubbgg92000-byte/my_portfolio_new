@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import {
+  ArrowUp,
   ArrowUpRight,
   Bot,
   Boxes,
@@ -14,6 +16,7 @@ import {
   Code2,
   Container,
   Coffee,
+  Copy,
   Cpu,
   Database,
   Download,
@@ -36,6 +39,8 @@ import {
   WandSparkles,
   Workflow,
 } from "lucide-react";
+import { ContactForm } from "@/components/contact/contact-form";
+import { responsiveImage } from "@/lib/responsive-image";
 
 const aboutCards = [
   { title: "Mission", body: "Build useful products with polished interfaces, reusable components, and practical automation." },
@@ -130,7 +135,7 @@ const skillGroups = [
 
 const resumeSummary = [
   { label: "Experience", value: "Frontend Developer at Uncommon Design Services; SaaS UI, API integration, testing, debugging, Cloudflare deployment support." },
-  { label: "Education", value: "B.Tech Mechanical Engineering, Holy Mary Group of Institutions. Diploma Mechanical Engineering, St. Marys Group of Institutions." },
+  { label: "Education", value: "B.Tech Mechanical Engineering, Holy Mary Group of Institutions. Diploma Mechanical Engineering, St. Mary's Group of Institutions." },
   { label: "Skills", value: "React, Svelte, JavaScript, HTML, CSS, Tailwind, REST APIs, Git, Cloudflare, n8n, automation workflows, prompt engineering, Selenium basics." },
 ];
 
@@ -141,7 +146,7 @@ const focusItems = [
   { label: "Automation Workflows", icon: Workflow },
   { label: "Open To Work", icon: Check },
 ];
-const journeyItems = ["Mechanical", "Business", "Frontend", "Ai Automation"];
+const journeyItems = ["Mechanical", "Business", "Frontend", "AI Automation"];
 
 const certificates = [
   { achievement: "Selenium Automation Testing Basics", organization: "Course/Practice", year: "2024", view: "Resume" },
@@ -159,29 +164,13 @@ const contactCards = [
   { label: "GitHub", value: "pubbgg92000-byte", href: "https://github.com/pubbgg92000-byte", icon: Github },
   { label: "LinkedIn", value: "Arvind M", href: "https://www.linkedin.com/in/mangalarapu-arvind-dev/", icon: Linkedin },
   { label: "Resume", value: "Download PDF", href: "/resume.pdf", icon: Download },
-  { label: "Location", value: "Hyderabad", href: "https://www.google.com/maps/place/Hyderabad", icon: MapPin },
 ];
-
-export function PortfolioSections() {
-  return (
-    <>
-      <AboutSection />
-      <LearningNowSection className="mobile-secondary-section" />
-      <SkillsSection />
-      <ResumeSection className="mobile-secondary-section" />
-      <CurrentFocusSection className="mobile-secondary-section" />
-      <CertificationsSection className="mobile-secondary-section" />
-      <ContactSection className="mobile-secondary-section" />
-      <PortfolioFooter />
-    </>
-  );
-}
 
 export function AboutSection() {
   return (
     <section id="about" className="story-section about-section" aria-labelledby="about-title">
       <div className="about-portrait" aria-label="Animated Arvind identity portrait">
-        <img src="/images/my_profile _pic/Arvind_profile.png" alt="Portrait of Arvind" />
+        <img {...responsiveImage("/images/profile/Arvind_profile.webp")} sizes="(max-width: 780px) 80vw, 420px" alt="Portrait of Arvind" loading="lazy" decoding="async" width="900" height="900" />
         <span>Frontend + Automation</span>
       </div>
       <div className="about-copy">
@@ -196,6 +185,7 @@ export function AboutSection() {
             {journeyItems.map((item) => <span key={item}>{item}</span>)}
           </div>
         </div>
+        <Link className="about-journey-link" href="/journey">Read the full journey<ArrowUpRight aria-hidden="true" /></Link>
       </div>
       <div className="about-card-grid">
         {aboutCards.map((card) => (
@@ -223,7 +213,7 @@ export function LearningNowSection({ className = "" }: { className?: string }) {
     <section className={`story-section learning-now ${className}`.trim()} aria-labelledby="learning-now-title">
       <header>
         <p className="section-kicker">Currently learning</p>
-        <h2 id="learning-now-title">Current focus</h2>
+        <h2 id="learning-now-title">What I&apos;m learning now</h2>
       </header>
       <div>
         {currentlyLearning.map(({ label, icon: Icon }) => (
@@ -247,13 +237,19 @@ export function SkillsSection() {
         {skillGroups.map((group) => {
           const Icon = group.icon;
           const isOpen = openSkill === group.title;
+          const panelId = `skill-panel-${group.title.toLowerCase().replace(/\s+/g, "-")}`;
           return (
             <article className={isOpen ? "open" : ""} key={group.title}>
-              <button type="button" onClick={() => setOpenSkill(isOpen ? "" : group.title)} aria-expanded={isOpen}>
+              <button
+                type="button"
+                onClick={() => setOpenSkill(isOpen ? "" : group.title)}
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+              >
                 <span><Icon aria-hidden="true" />{group.title}</span>
                 <ChevronDown aria-hidden="true" />
               </button>
-              <div className="skill-panel">
+              <div className="skill-panel" id={panelId}>
                 {group.skills.map(({ name, icon: SkillIcon }) => (
                   <section key={name}>
                     <span className="skill-mark" aria-hidden="true"><SkillIcon /></span>
@@ -273,8 +269,10 @@ export function ResumeSection({ className = "" }: { className?: string }) {
   return (
     <section id="resume" className={`story-section resume-section ${className}`.trim()} aria-labelledby="resume-title">
       <header>
-        <p className="section-kicker">Resume</p>
-        <h2 id="resume-title">Preview, download, print, connect.</h2>
+        <div>
+          <p className="section-kicker">Resume</p>
+          <h2 id="resume-title">Preview, download, print, connect.</h2>
+        </div>
         <div className="resume-actions">
           <a href="/resume.pdf" target="_blank" rel="noreferrer"><ArrowUpRight aria-hidden="true" />Preview</a>
           <a href="/resume.pdf" download><Download aria-hidden="true" />Download</a>
@@ -290,7 +288,7 @@ export function ResumeSection({ className = "" }: { className?: string }) {
         </div>
         <div>
           <span>Current Direction</span>
-          <strong>Frontend +Ai Automation</strong>
+          <strong>Frontend + AI Automation</strong>
           <p>Product interfaces, workflow systems, and practical AI tools used as support.</p>
         </div>
       </div>
@@ -318,6 +316,7 @@ export function CurrentFocusSection({ className = "" }: { className?: string }) 
           <span key={label}><Icon aria-hidden="true" />{label}</span>
         ))}
       </div>
+      <Link className="focus-cta" href="/contact">Get in touch<ArrowUpRight aria-hidden="true" /></Link>
     </section>
   );
 }
@@ -360,9 +359,21 @@ export function CertificationsSection({ className = "" }: { className?: string }
       });
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Coalesce scroll events into one update per frame.
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        handleScroll();
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     handleScroll(); // Init
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -383,7 +394,7 @@ export function CertificationsSection({ className = "" }: { className?: string }
             <span>{item.year}</span>
             <h3>{item.achievement}</h3>
             <p>{item.organization}</p>
-            {item.view ? <a href="/resume.pdf"><ArrowUpRight aria-hidden="true" />{item.view}</a> : null}
+            {item.view ? <a href="/resume.pdf" target="_blank" rel="noreferrer" aria-label={`View ${item.achievement} in resume (opens PDF)`}><ArrowUpRight aria-hidden="true" />{item.view}</a> : null}
           </article>
         ))}
       </div>
@@ -416,7 +427,11 @@ function ContactCard({ item }: { item: typeof contactCards[0] }) {
     >
       <item.icon aria-hidden="true" />
       <span>{item.label}</span>
-      <strong>{item.value}</strong>
+      <strong>
+        {item.value.includes("@")
+          ? <>{item.value.split("@")[0]}<wbr />@{item.value.split("@")[1]}</>
+          : item.value}
+      </strong>
     </a>
   );
 }
@@ -430,26 +445,93 @@ export function ContactSection({ className = "" }: { className?: string }) {
       </header>
       <div className="availability-strip">
         <strong><Check aria-hidden="true" />Available</strong>
+        <span><MapPin aria-hidden="true" />Hyderabad, India</span>
         <span>Remote</span>
         <span>Hybrid</span>
         <span>Freelance</span>
       </div>
+      <ContactForm />
+      <p className="contact-alt">Or reach me directly</p>
       <div className="contact-grid">
         {contactCards.map((item) => (
           <ContactCard key={item.label} item={item} />
         ))}
       </div>
+      <div className="contact-quick">
+        <CopyEmailButton email="mangalarapuarvind@gmail.com" />
+        <span>Usually replies within a day.</span>
+      </div>
     </section>
   );
 }
 
+function CopyEmailButton({ email }: { email: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2200);
+    } catch {
+      window.location.href = `mailto:${email}`;
+    }
+  };
+
+  return (
+    <button type="button" className="copy-email" onClick={copy} aria-live="polite">
+      {copied ? <><Check aria-hidden="true" />Email copied</> : <><Copy aria-hidden="true" />Copy email address</>}
+    </button>
+  );
+}
+
+export function MobileQuickActions() {
+  return (
+    <section className="mobile-cta" aria-label="Quick actions">
+      <p className="section-kicker">Next step</p>
+      <h2>Want to work together?</h2>
+      <div>
+        <Link className="hero-button primary" href="/contact">Contact me<ArrowUpRight aria-hidden="true" /></Link>
+        <Link className="hero-button secondary" href="/resume">View resume</Link>
+      </div>
+    </section>
+  );
+}
+
+const footerLinks = [
+  { label: "Projects", href: "/#projects" },
+  { label: "About", href: "/#about" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Journey", href: "/journey" },
+  { label: "Resume", href: "/resume" },
+  { label: "Certifications", href: "/certifications" },
+  { label: "Contact", href: "/contact" },
+];
+
 export function PortfolioFooter() {
   return (
     <footer className="system-footer">
+      <div className="footer-links">
+        <nav aria-label="Footer navigation">
+          {footerLinks.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
+        </nav>
+        <div className="footer-socials">
+          <a href="https://github.com/pubbgg92000-byte" target="_blank" rel="noreferrer" aria-label="GitHub (opens in new tab)"><Github aria-hidden="true" /></a>
+          <a href="https://www.linkedin.com/in/mangalarapu-arvind-dev/" target="_blank" rel="noreferrer" aria-label="LinkedIn (opens in new tab)"><Linkedin aria-hidden="true" /></a>
+          <a href="mailto:mangalarapuarvind@gmail.com" aria-label="Send email"><Mail aria-hidden="true" /></a>
+        </div>
+      </div>
       <p>© 2026 Arvind</p>
       <span>arvind-dev.in</span>
       <strong>ARVIND</strong>
-      <small>Frontend Developer · Software Developer · Ai Automation · Agentic Workflows</small>
+      <small>Frontend Developer · Software Developer · AI Automation · Agentic Workflows</small>
+      <button
+        type="button"
+        className="back-to-top"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <ArrowUp aria-hidden="true" />Back to top
+      </button>
       <i aria-hidden="true" />
     </footer>
   );

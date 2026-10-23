@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { CommandPalette } from "@/components/command/command-palette";
+import { buildPaletteItems } from "@/components/command/palette-items";
 
 const geist = Space_Grotesk({ subsets: ["latin"], variable: "--font-geist" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -113,7 +115,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link
           rel="preload"
           as="image"
-          href="/images/robot-frames/frame_000000.png"
+          href="/images/robot-frames/frame_000000.webp"
+          type="image/webp"
           fetchPriority="high"
         />
       </head>
@@ -123,6 +126,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         {children}
+        <CommandPalette items={buildPaletteItems()} />
       </body>
     </html>
   );

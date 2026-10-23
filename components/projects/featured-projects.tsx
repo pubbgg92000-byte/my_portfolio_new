@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import {
   ArrowUpRight,
+  Loader2,
   Bot,
   BriefcaseBusiness,
   ChevronDown,
@@ -15,6 +16,7 @@ import {
   PawPrint,
 } from "lucide-react";
 import { experiments, projects } from "@/content/projects/projects";
+import { responsiveImage } from "@/lib/responsive-image";
 
 const experimentIcons = {
   "forest-life": Leaf,
@@ -64,6 +66,28 @@ const techIcons: Record<string, string> = {
   cli: ">_",
 };
 
+function LinkPending() {
+  const { pending } = useLinkStatus();
+  return pending ? <Loader2 className="spin link-pending" aria-hidden="true" /> : null;
+}
+
+type FilterKey = "all" | "professional" | "personal" | "svelte" | "react" | "automation";
+
+const filters: { key: FilterKey; label: string; match: (technologies: string[], category: string) => boolean }[] = [
+  { key: "all", label: "All", match: () => true },
+  { key: "professional", label: "Professional", match: (_, category) => /professional/i.test(category) },
+  { key: "personal", label: "Personal builds", match: (_, category) => !/professional/i.test(category) },
+  { key: "svelte", label: "Svelte", match: (technologies) => technologies.some((item) => /svelte/i.test(item)) },
+  { key: "react", label: "React / Next.js", match: (technologies) => technologies.some((item) => /react|next|r3f/i.test(item)) },
+  {
+    key: "automation",
+    label: "Automation & AI",
+    match: (technologies, category) =>
+      technologies.some((item) => /automation|playwright|selenium|python|n8n|hugging face|telegram|^cli$/i.test(item)) ||
+      /automation|\bai\b|job-search|tooling/i.test(category),
+  },
+];
+
 function techSlug(name: string) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
@@ -82,6 +106,13 @@ function TechTag({ name }: { name: string }) {
 
 export function FeaturedProjects() {
   const [openExperiment, setOpenExperiment] = useState<string | null>(null);
+  const [filterKey, setFilterKey] = useState<FilterKey>("all");
+  const activeFilter = filters.find((filter) => filter.key === filterKey) ?? filters[0];
+  const visibleProjects = projects.filter((project) => activeFilter.match(project.technologies, project.category));
+  const visibleExperiments = experiments.filter((experiment) => activeFilter.match(experiment.technologies, experiment.category));
+  const countFor = (filter: (typeof filters)[number]) =>
+    projects.filter((p) => filter.match(p.technologies, p.category)).length +
+    experiments.filter((e) => filter.match(e.technologies, e.category)).length;
 
   const rememberProjectPosition = (projectSlug: string) => {
     window.sessionStorage.setItem(
@@ -100,8 +131,27 @@ export function FeaturedProjects() {
         <div><p>Selected work</p><h2 id="projects-title">Featured projects</h2></div>
         <p>Professional contributions, product interfaces, creative web experiences, and business-facing systems built across team projects and self-initiated portfolio work.</p>
       </header>
+      <div className="project-filters" role="group" aria-label="Filter projects">
+        {filters.map((filter) => (
+          <button
+            key={filter.key}
+            type="button"
+            aria-pressed={filter.key === filterKey}
+            onClick={() => setFilterKey(filter.key)}
+          >
+            {filter.label}
+            <span aria-hidden="true">{countFor(filter)}</span>
+          </button>
+        ))}
+        <p className="sr-only" role="status" aria-live="polite">
+          Showing {visibleProjects.length} featured projects and {visibleExperiments.length} experiments.
+        </p>
+      </div>
+      {visibleProjects.length === 0 ? (
+        <p className="filter-empty">No featured projects use this filter yet. The experiments below might.</p>
+      ) : null}
       <div className="project-list">
-        {projects.map((project, index) => (
+        {visibleProjects.map((project, index) => (
           <article
             id={`project-${project.slug}`}
             className="project-row"
@@ -118,6 +168,7 @@ export function FeaturedProjects() {
                   className="project-title-link"
                 >
                   {project.title}
+                  <LinkPending />
                 </Link>
               </h3>
               <span>{project.summary}</span>
@@ -127,8 +178,9 @@ export function FeaturedProjects() {
                     href={`/projects/${project.slug}`}
                     aria-label={`View ${project.title} project details`}
                     onClick={() => rememberProjectPosition(project.slug)}
+                    tabIndex={-1}
                   >
-                    <img src={project.image.src} alt={project.image.alt} loading="lazy" />
+                    <img {...responsiveImage(project.image.src)} sizes="(max-width: 780px) 100vw, 620px" alt={project.image.alt} loading="lazy" decoding="async" />
                   </Link>
                 </figure>
               ) : null}
@@ -142,7 +194,7 @@ export function FeaturedProjects() {
               ) : null}
               {project.demoCredentials ? (
                 <details className="project-credentials">
-                  <summary>Get login creds</summary>
+                  <summary>Demo login details</summary>
                   <div>
                     {project.demoCredentials.map((credential) => (
                       <section key={credential.role}>
@@ -178,16 +230,21 @@ export function FeaturedProjects() {
           <p>Selected experiments</p>
           <h3>Smaller builds, utilities, and creative prototypes</h3>
         </header>
+        {visibleExperiments.length === 0 ? (
+          <p className="filter-empty">No experiments match this filter.</p>
+        ) : null}
         <div className="experiment-grid">
-          {experiments.map((experiment) => {
+          {visibleExperiments.map((experiment) => {
             const isOpen = openExperiment === experiment.slug;
             const Icon = experimentIcons[experiment.slug as keyof typeof experimentIcons] ?? Image;
+            const cardId = `experiment-${experiment.slug}`;
             return (
-              <article className={`experiment-card${isOpen ? " open" : ""}`} key={experiment.slug}>
+              <article className={`experiment-card${isOpen ? " open" : ""}`} key={experiment.slug} id={cardId}>
                 <button
                   className="experiment-toggle"
                   type="button"
                   aria-expanded={isOpen}
+                  aria-controls={cardId}
                   onClick={() => setOpenExperiment(isOpen ? null : experiment.slug)}
                 >
                   <span>

@@ -3,6 +3,7 @@
 import { useLayoutEffect } from "react";
 
 const SCROLL_KEY = "portfolioHomeScroll";
+const USER_INPUT_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
 
 export function HomeScrollMemory() {
   useLayoutEffect(() => {
@@ -16,6 +17,7 @@ export function HomeScrollMemory() {
     const isReload = navigation?.type === "reload";
     const restoreTimers: number[] = [];
     let savedScrollY: number | null = null;
+    let userTookOver = false;
 
     try {
       const stored = window.sessionStorage.getItem(SCROLL_KEY);
@@ -28,6 +30,9 @@ export function HomeScrollMemory() {
     }
 
     const restorePosition = () => {
+      // Never fight the user: once they scroll or type, stop re-snapping.
+      if (userTookOver) return;
+
       if (isReload && savedScrollY !== null) {
         window.scrollTo({ top: savedScrollY, behavior: "instant" });
         return;
@@ -39,12 +44,25 @@ export function HomeScrollMemory() {
       }
     };
 
+    const stopRestoring = () => {
+      userTookOver = true;
+      restoreTimers.forEach(window.clearTimeout);
+    };
+
     restorePosition();
+    // Layout can shift while the hero pins and frames load; re-apply a few times
+    // unless the user has already taken control.
     restoreTimers.push(
       window.setTimeout(restorePosition, 100),
       window.setTimeout(restorePosition, 300),
       window.setTimeout(restorePosition, 700),
       window.setTimeout(restorePosition, 1200),
+    );
+
+    const onHeroReady = () => restorePosition();
+    window.addEventListener("heroFramesReady", onHeroReady);
+    USER_INPUT_EVENTS.forEach((event) =>
+      window.addEventListener(event, stopRestoring, { passive: true, once: true }),
     );
 
     const save = () => {
@@ -62,6 +80,8 @@ export function HomeScrollMemory() {
 
     return () => {
       restoreTimers.forEach(window.clearTimeout);
+      window.removeEventListener("heroFramesReady", onHeroReady);
+      USER_INPUT_EVENTS.forEach((event) => window.removeEventListener(event, stopRestoring));
       window.removeEventListener("scroll", save);
       window.removeEventListener("pagehide", save);
       save();

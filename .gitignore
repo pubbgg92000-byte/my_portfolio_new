@@ -17,3 +17,14 @@ pnpm-debug.log*
 *.tsbuildinfo
 
 public/images/robot-frames-webp/
+
+# Legacy PNG hero frames (replaced by WebP); delete locally when convenient
+public/images/robot-frames/*.png
+
+# Original PNG screenshots/portrait (site uses the WebP copies); delete locally when convenient
+public/images/projects/*.png
+public/images/profile/*.png
+
+# Playwright
+test-results/
+playwright-report/
