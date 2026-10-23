@@ -28,8 +28,12 @@ test("contact form rejects an empty submission", async ({ page }) => {
 
 test("command palette opens with the keyboard and navigates", async ({ page }) => {
   await page.goto("/resume");
-  await page.keyboard.press("ControlOrMeta+k");
   const input = page.getByRole("combobox", { name: /search pages/i });
+  // The shortcut listener is attached after hydration, so retry until the dialog opens.
+  await expect(async () => {
+    await page.keyboard.press("ControlOrMeta+k");
+    await expect(input).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 15_000 });
   await expect(input).toBeFocused();
   await input.fill("staffly");
   await page.keyboard.press("Enter");

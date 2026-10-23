@@ -6445,3 +6445,26 @@ body:has(.command-palette[open]) {
     font-size: 8px
   }
 }
+
+/* Hero first frame under the canvas/video: instant paint, same cover framing as both. */
+.robot-world .robot-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none
+}
+
+/* Once the canvas sequence or the video takes over, drop the poster so the
+   screen-blended canvas never composites against a duplicate frame. */
+.robot-world .robot-poster {
+  transition: opacity .45s
+}
+
+.robot-world:has(canvas.ready) .robot-poster,
+.portfolio-hero.hero-video-segment-active .robot-poster,
+.portfolio-hero.hero-video-fallback-active .robot-poster {
+  opacity: 0
+}

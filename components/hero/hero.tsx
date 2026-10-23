@@ -2,15 +2,18 @@
 
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowDown, ArrowRight, Braces, Code2, Download, Github,
   Linkedin, Mail, PanelsTopLeft, Server, Sparkles, WandSparkles,
 } from "lucide-react";
 import { SiteHeader, navSections } from "@/components/nav/site-header";
 
-gsap.registerPlugin(ScrollTrigger);
+// GSAP is loaded after hydration so it stays out of the startup bundle.
+type Gsap = typeof import("gsap")["default"];
+type Tween = ReturnType<Gsap["to"]>;
+type ScrollTriggerStatic = typeof import("gsap/ScrollTrigger")["ScrollTrigger"];
+type ScrollTriggerInstance = InstanceType<ScrollTriggerStatic>;
+
 const FRAME_COUNT = 300;
 const FRAME_LOADERS = 6;
 const VIDEO_START_PROGRESS = 0.58;
@@ -44,6 +47,10 @@ export function Hero() {
   const [frameLoadProgress, setFrameLoadProgress] = useState(0);
 
   useEffect(() => {
+    let cleanup: (() => void) | undefined;
+    let disposed = false;
+
+    const setup = (gsap: Gsap, ScrollTrigger: ScrollTriggerStatic): (() => void) | undefined => {
     const scope = root.current;
     const canvas = canvasRef.current;
     const video = videoRef.current;
@@ -55,14 +62,14 @@ export function Hero() {
     let cancelled = false;
     let introStarted = false;
     let activeWordIndex = 0;
-    let idleTween: gsap.core.Tween | null = null;
-    let scrollTween: gsap.core.Tween | null = null;
-    let projectTrigger: ScrollTrigger | null = null;
+    let idleTween: Tween | null = null;
+    let scrollTween: Tween | null = null;
+    let projectTrigger: ScrollTriggerInstance | null = null;
     let fallbackTimer: number | null = null;
     let resizeTimer: number | null = null;
     let usingLoadVideo = false;
     let loadedFrames = 0;
-    const navTriggers: ScrollTrigger[] = [];
+    const navTriggers: ScrollTriggerInstance[] = [];
     const mobileMotion = window.matchMedia(MOBILE_QUERY).matches;
 
     const setActiveNav = (section: string) => {
@@ -343,6 +350,18 @@ export function Hero() {
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("resize", onResize);
     };
+    };
+
+    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([gsapModule, triggerModule]) => {
+      if (disposed) return;
+      gsapModule.default.registerPlugin(triggerModule.ScrollTrigger);
+      cleanup = setup(gsapModule.default, triggerModule.ScrollTrigger);
+    });
+
+    return () => {
+      disposed = true;
+      cleanup?.();
+    };
   }, []);
 
   return (
@@ -355,11 +374,20 @@ export function Hero() {
         <div className="ambient-rings" aria-hidden="true" />
         <div className="chest-glow" aria-hidden="true" />
         <div className="robot-world" role="img" aria-label="Animated AI robot illustration">
+          {/* First frame as a real image: paints before any script runs, so it is the LCP element. */}
+          <img
+            className="robot-poster"
+            src="/images/robot-frames/frame_000000.webp"
+            alt=""
+            width={1280}
+            height={720}
+            fetchPriority="high"
+            decoding="async"
+          />
           <canvas ref={canvasRef} />
           <video
             ref={videoRef}
             src="/videos/hero-fallback.mp4"
-            poster="/images/robot-frames/frame_000000.webp"
             muted
             playsInline
             loop
