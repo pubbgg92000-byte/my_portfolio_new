@@ -28,3 +28,6 @@ public/images/profile/*.png
 # Playwright
 test-results/
 playwright-report/
+
+# Raw 3D sources (large); optimized copies live in public/models/world
+assets-src/

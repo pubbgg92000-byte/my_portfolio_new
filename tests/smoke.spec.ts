@@ -54,27 +54,17 @@ test("open graph image renders for a project", async ({ request }) => {
   expect(response.headers()["content-type"]).toContain("image/png");
 });
 
-test("3D studio exposes accessible navigation and project content", async ({ page }) => {
+test("3D portfolio exposes accessible navigation and existing project content", async ({ page }) => {
   await page.goto("/3d?fallback=1");
-  await page.getByRole("button", { name: /enter the studio/i }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(/frontend craft/i);
-  if (await page.getByRole("button", { name: /explore/i }).isVisible()) {
-    await page.getByRole("button", { name: /explore/i }).click();
-  }
-  await page.getByRole("button", { name: /projects/i }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(/six builds/i);
-  await page.getByRole("button", { name: /staffly/i }).last().click();
-  await expect(page.getByRole("complementary", { name: /staffly details/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/building interfaces/i);
+  await expect(page.getByRole("link", { name: /explore my work/i })).toHaveAttribute("href", "#work");
+  await expect(page.getByRole("heading", { name: /staffly/i })).toBeVisible();
+  await expect(page.locator('a[href="/projects/staffly"]')).toBeVisible();
 });
 
-test("3D studio fallback retains all sections and classic portfolio link", async ({ page }) => {
+test("3D portfolio fallback retains content, contact and classic portfolio link", async ({ page }) => {
   await page.goto("/3d?fallback=1");
-  await expect(page.getByText(/3d fallback mode/i)).toBeVisible();
   await expect(page.getByRole("link", { name: /classic portfolio/i })).toHaveAttribute("href", "/");
-  await page.getByRole("button", { name: /enter the studio/i }).click();
-  if (await page.getByRole("button", { name: /explore/i }).isVisible()) {
-    await page.getByRole("button", { name: /explore/i }).click();
-  }
-  await page.getByRole("button", { name: /contact/i }).click();
-  await expect(page.getByRole("link", { name: /download résumé/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /tools arranged/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /mangalarapuarvind@gmail\.com/i })).toBeVisible();
 });

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { StudioShell } from "@/components/studio/studio-shell";
 
 export const metadata: Metadata = {
-  title: "3D Interactive Studio",
-  description: "Explore Arvind's projects, skills, journey, and contact details inside an interactive 3D portfolio studio.",
+  title: "3D Portfolio",
+  description: "Explore Arvind's projects, skills, journey, experiments, and contact details through a cinematic interactive 3D portfolio.",
   alternates: { canonical: "/3d" },
 };
 

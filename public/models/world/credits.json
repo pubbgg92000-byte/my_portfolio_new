@@ -1,0 +1,268 @@
+{
+  "museum": {
+    "file": "museum.glb",
+    "title": "VR Gallery House (baked)",
+    "author": "Elin (https://sketchfab.com/ElinHohler)",
+    "source": "https://sketchfab.com/3d-models/vr-gallery-house-baked-8e3b280476eb4790af97e2abd3d9be59",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "island": {
+    "file": "island.glb",
+    "title": "Tropical Island",
+    "author": "Elin (https://sketchfab.com/ElinHohler)",
+    "source": "https://sketchfab.com/3d-models/tropical-island-f91862f8c38b481aa19edccac851eefb",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "city-block": {
+    "file": "city-block.glb",
+    "title": "street city buildings (8)",
+    "author": "dasy444 (https://sketchfab.com/dasy444)",
+    "source": "https://sketchfab.com/3d-models/street-city-buildings-8-873c5f14ec464966a11a4d772d187270",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "simple-building": {
+    "file": "simple-building.glb",
+    "title": "FREE - SM_SimpleBuilding_1A - public domain",
+    "author": "Unity Fan youtube channel (https://sketchfab.com/unityfan777)",
+    "source": "https://sketchfab.com/3d-models/free-sm-simplebuilding-1a-public-domain-83d2711fe26d4ee8b9d0e7b5b06bbe1c",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "store-building": {
+    "file": "store-building.glb",
+    "title": "Woolworths Big W Australian Commercial Building",
+    "author": "JoTrain The Aussie 🇦🇺 (https://sketchfab.com/Jotrain)",
+    "source": "https://sketchfab.com/3d-models/woolworths-big-w-australian-commercial-building-7a006ce2d8a641e38133388ef9071ff2",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "tower-building": {
+    "file": "tower-building.glb",
+    "title": "Building",
+    "author": "abhayexe (https://sketchfab.com/abhayexe)",
+    "source": "https://sketchfab.com/3d-models/building-71d0bf5dfd134c53a0d436bff0cb29b2",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "office": {
+    "file": "office.glb",
+    "title": "Office",
+    "author": "VertexForge (https://sketchfab.com/prankscare99)",
+    "source": "https://sketchfab.com/3d-models/office-eba2f30a692d41f29be10706b970d883",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "mountain": {
+    "file": "mountain.glb",
+    "title": "gt racing 2 - mount rainier",
+    "author": "amogusstrikesback2 (https://sketchfab.com/amogusstrikesback2)",
+    "source": "https://sketchfab.com/3d-models/gt-racing-2-mount-rainier-c4efa86f4b7b4cd5b897fd6c67645a32",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "tree": {
+    "file": "tree.glb",
+    "title": "Tree Animate",
+    "author": "RandyGF (https://sketchfab.com/RandyGF)",
+    "source": "https://sketchfab.com/3d-models/tree-animate-f0f9eb5e6c104bbb8e1f41c97019e6f2",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "turbine": {
+    "file": "turbine.glb",
+    "title": "Wind Turbine",
+    "author": "anthonyc (https://sketchfab.com/realanthonycolmenero)",
+    "source": "https://sketchfab.com/3d-models/wind-turbine-cc403062ce3a4fd68a4596289164be2f",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "plane": {
+    "file": "plane.glb",
+    "title": "Stylized WW1 Plane",
+    "author": "AntijnvanderGun (https://sketchfab.com/AntijnvanderGun)",
+    "source": "https://sketchfab.com/3d-models/stylized-ww1-plane-c4edeb0e410f46e8a4db320879f0a1db",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "helicopter": {
+    "file": "helicopter.glb",
+    "title": "MH-6 Little Bird Helicopter Animated",
+    "author": "OmegaRedZA (https://sketchfab.com/OmegaRedZA)",
+    "source": "https://sketchfab.com/3d-models/mh-6-little-bird-helicopter-animated-ff51e655d05d4a05b2c0d9b274c00ed7",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "train": {
+    "file": "train.glb",
+    "title": "Train night scene",
+    "author": "Pasha (https://sketchfab.com/Pasha.)",
+    "source": "https://sketchfab.com/3d-models/train-night-scene-a5433c493fb24a3793e3d130e9e6bc54",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "supercar": {
+    "file": "supercar.glb",
+    "title": "Lamborghini Centenario LP-770 Interior SDC",
+    "author": "SDC PERFORMANCE™️ (https://sketchfab.com/3Duae)",
+    "source": "https://sketchfab.com/3d-models/lamborghini-centenario-lp-770-interior-sdc-d679af35b5694301a185c7454a700c73",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "bird": {
+    "file": "bird.glb",
+    "title": "Updated Bird Alex",
+    "author": "ahitch3 (https://sketchfab.com/ahitch3)",
+    "source": "https://sketchfab.com/3d-models/updated-bird-alex-d498f6b08b0648268eac9f15b77acb92",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "hummingbird": {
+    "file": "hummingbird.glb",
+    "title": "LowPoly humming-bird animated",
+    "author": "alexi.smnd (https://sketchfab.com/alexi.smnd)",
+    "source": "https://sketchfab.com/3d-models/lowpoly-humming-bird-animated-abc35c5c30fc44c282188c3065a6daf0",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "flying-bird": {
+    "file": "flying-bird.glb",
+    "title": "flying animated bird",
+    "author": "sarvjeet (https://sketchfab.com/sarvjeetkbmw)",
+    "source": "https://sketchfab.com/3d-models/flying-animated-bird-44a80a59bde840cc8faabc8a89c787ca",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "bird-monster": {
+    "file": "bird-monster.glb",
+    "title": "Bird Monster",
+    "author": "Amzar Raif (https://sketchfab.com/amzarraif99)",
+    "source": "https://sketchfab.com/3d-models/bird-monster-71c4885107df4337ab0c61164d147c0c",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "rhino": {
+    "file": "rhino.glb",
+    "title": "Model 56A - Southern White Rhino",
+    "author": "DigitalLife3D (https://sketchfab.com/DigitalLife3D)",
+    "source": "https://sketchfab.com/3d-models/model-56a-southern-white-rhino-8e97b62a90f44ce19ea9e3fd421f55b4",
+    "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)"
+  },
+  "food-stand": {
+    "file": "food-stand.glb",
+    "title": "Elizabeth's Food Stand",
+    "author": "bpcrews (https://sketchfab.com/bpcrews)",
+    "source": "https://sketchfab.com/3d-models/elizabeths-food-stand-2f5369d4ba6448f39ea02d90163b4afa",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "staircase": {
+    "file": "staircase.glb",
+    "title": "Staircase Modular Frame - Steel",
+    "author": "brandon_grey (https://sketchfab.com/brandondmc10)",
+    "source": "https://sketchfab.com/3d-models/staircase-modular-frame-steel-c4c326966b4a43c88ad50f5da52d0df9",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "sweeper": {
+    "file": "sweeper.glb",
+    "title": "Autonomous Robot Sweeper",
+    "author": "Janis Zeps (https://sketchfab.com/zeps9001)",
+    "source": "https://sketchfab.com/3d-models/autonomous-robot-sweeper-0d285c3d015a4573ae1100d298935cb9",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "biped-robot": {
+    "file": "biped-robot.glb",
+    "title": "Biped robot",
+    "author": "Willy Decarpentrie (https://sketchfab.com/skudgee)",
+    "source": "https://sketchfab.com/3d-models/biped-robot-801d2a245e4a4405a0c2152b35b5e486",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "loft-16": {
+    "file": "loft-16.glb",
+    "title": "Loft 16 interior",
+    "author": "dasy444 (https://sketchfab.com/dasy444)",
+    "source": "https://sketchfab.com/3d-models/loft-16-interior-6fcba30b42d94581b068b448b6da85a2",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "loft-15": {
+    "file": "loft-15.glb",
+    "title": "interior (15) mini loft",
+    "author": "dasy444 (https://sketchfab.com/dasy444)",
+    "source": "https://sketchfab.com/3d-models/interior-15-mini-loft-ace0229c6a9d4d7d9cbf709b53964f13",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "loft-18": {
+    "file": "loft-18.glb",
+    "title": "free Loft 18 mini office v.optimization",
+    "author": "dasy444 (https://sketchfab.com/dasy444)",
+    "source": "https://sketchfab.com/3d-models/free-loft-18-mini-office-voptimization-e434caaeaa4a4347a3c45eac6c138c30",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "interior-14": {
+    "file": "interior-14.glb",
+    "title": "The interior (14) is spacious.",
+    "author": "dasy444 (https://sketchfab.com/dasy444)",
+    "source": "https://sketchfab.com/3d-models/the-interior-14-is-spacious-79262bfc39d54fd2a0edc9d80fafdb6d",
+    "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)"
+  },
+  "art-poplars": {
+    "file": "art-poplars.glb",
+    "title": "1958.32 Two Poplars in the Alpilles",
+    "author": "Cleveland Museum of Art (https://sketchfab.com/clevelandart)",
+    "source": "https://sketchfab.com/3d-models/195832-two-poplars-in-the-alpilles-e89d1437be394b238a85adba5cd8067a",
+    "license": "CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)"
+  },
+  "kylo-ren": {
+    "file": "kylo-ren.glb",
+    "title": "Kylo Ren",
+    "author": "Mind Mulch for The Masses (https://sketchfab.com/mindmulchforthemasses)",
+    "source": "https://sketchfab.com/3d-models/kylo-ren-74a1278851de4f88b2f1212e339e07af",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "poe-dameron": {
+    "file": "poe-dameron.glb",
+    "title": "Poe Dameron",
+    "author": "Mind Mulch for The Masses (https://sketchfab.com/mindmulchforthemasses)",
+    "source": "https://sketchfab.com/3d-models/poe-dameron-51c99c06e596427eb820d0e5e52809c7",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "jyn-erso": {
+    "file": "jyn-erso.glb",
+    "title": "Jyn Erso",
+    "author": "Mind Mulch for The Masses (https://sketchfab.com/mindmulchforthemasses)",
+    "source": "https://sketchfab.com/3d-models/jyn-erso-9547a563e09e4b26bc09a3453891e086",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "cassian-andor": {
+    "file": "cassian-andor.glb",
+    "title": "Cassian Andor",
+    "author": "Mind Mulch for The Masses (https://sketchfab.com/mindmulchforthemasses)",
+    "source": "https://sketchfab.com/3d-models/cassian-andor-1ef27f2978d442e39eac1e62cf28e226",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "mace-windu": {
+    "file": "mace-windu.glb",
+    "title": "Mace Windu",
+    "author": "Mind Mulch for The Masses (https://sketchfab.com/mindmulchforthemasses)",
+    "source": "https://sketchfab.com/3d-models/mace-windu-ba2eaba7ff6b45c89c1b2c4919e46880",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "spartan": {
+    "file": "spartan.glb",
+    "title": "Spartan Armour MKV - Halo Reach",
+    "author": "McCarthy3D (https://sketchfab.com/joshuawatt811)",
+    "source": "https://sketchfab.com/3d-models/spartan-armour-mkv-halo-reach-57070b2fd9ff472c8988e76d8c5cbe66",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "fountain-sim": {
+    "file": "fountain-sim.glb",
+    "title": "fountain water simulation",
+    "author": "UJJWAL CHAUHAN (https://sketchfab.com/Ujjwal-Chauhan)",
+    "source": "https://sketchfab.com/3d-models/fountain-water-simulation-d6c0f03a8287427692078398cfda4ff1",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "sports-car": {
+    "file": "sports-car.glb",
+    "title": "Cartoon Sports Car",
+    "author": "RCC Design (https://sketchfab.com/retrovalorem)",
+    "source": "https://sketchfab.com/3d-models/cartoon-sports-car-0fd87559642a41b7a7924876ad3e9399",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "retro-car": {
+    "file": "retro-car.glb",
+    "title": "Cicada - Retro Cartoon Car",
+    "author": "RCC Design (https://sketchfab.com/retrovalorem)",
+    "source": "https://sketchfab.com/3d-models/cicada-retro-cartoon-car-135b16b4f77249d8ad13185270f94251",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  },
+  "dirty-car": {
+    "file": "dirty-car.glb",
+    "title": "Dirty_car_061220",
+    "author": "3D Error 404 (https://sketchfab.com/3DError404)",
+    "source": "https://sketchfab.com/3d-models/dirty-car-061220-890c5f098d8e4edfaf67aa837705fd99",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)"
+  }
+}
